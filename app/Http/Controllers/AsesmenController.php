@@ -3,76 +3,138 @@
 namespace App\Http\Controllers;
 
 use App\Models\Asesmen;
+use App\Models\Pendaftaran;
 use Illuminate\Http\Request;
 
 class AsesmenController extends Controller
 {
+    // Menampilkan daftar pendaftar untuk guru
     public function index()
-{
-    if (auth()->user()->role === 'guru') {
-        // Jika guru, tampilkan view asesmen (pilih siswa)
-        $pendaftar = \App\Models\Pendaftaran::all();
-        return view('asesmen', compact('pendaftar'));
+    {
+        if (auth()->user()->role === 'guru') {
+            // Ambil semua pendaftar beserta asesmen (eager loading)
+            $pendaftar = Pendaftaran::with('asesmen')->get();
+
+            return view('asesmen', compact('pendaftar'));
+        }
+
+        return redirect()->route('dashboard.pendaftar')
+            ->with('info', 'Anda tidak diizinkan mengakses halaman asesmen.');
     }
 
-    // Jika pendaftar, langsung arahkan ke dashboard
-    return redirect()->route('dashboard.pendaftar')->with('info', 'Anda tidak diizinkan mengakses halaman asesmen.');
-}
+    // Menampilkan form asesmen untuk pendaftar tertentu
+    public function form($pendaftaranId)
+    {
+        $pendaftaran = Pendaftaran::findOrFail($pendaftaranId);
 
+        // Cek apakah sudah ada asesmen untuk pendaftar ini
+        if (Asesmen::where('pendaftaran_id', $pendaftaranId)->exists()) {
+            return redirect()->route('asesmen.index')
+                ->with('info', 'Asesmen untuk pendaftar ini sudah pernah diisi.');
+        }
 
-public function store(Request $request)
-{
-    $isGuru = auth()->user()->role === 'guru';
+        return view('guru.isi_asesmen', compact('pendaftaran'));
+    }
 
-    $request->validate([
-        'pendengaran' => 'required|array',
-        'pendengaran.*' => 'integer|min:1|max:5',
+    // Menyimpan hasil asesmen
+    public function store(Request $request)
+    {
+        $isGuru = auth()->user()->role === 'guru';
 
-        'berbakat' => 'required|array',
-        'berbakat.*' => 'integer|min:1|max:5',
+        // Validasi input
+        $rules = [
+            'pendaftaran_id' => $isGuru ? 'required|exists:pendaftaran,id' : 'nullable',
 
-        'kesulitan' => 'required|array',
-        'kesulitan.*' => 'integer|min:1|max:5',
+            'gangguan_penglihatan' => 'required|array',
+            'gangguan_penglihatan.*' => 'integer|min:1|max:5',
 
-        'kesimpulan' => 'required|string',
-        'pendaftaran_id' => $isGuru ? 'required|exists:pendaftaran,id' : 'nullable',
-    ]);
+            'gangguan_pendengaran' => 'required|array',
+            'gangguan_pendengaran.*' => 'integer|min:1|max:5',
 
-    $pendaftaran_id = $isGuru
-        ? $request->pendaftaran_id
-        : \App\Models\Pendaftaran::where('user_id', auth()->id())->first()?->id;
+            'tunagrahita' => 'required|array',
+            'tunagrahita.*' => 'integer|min:1|max:5',
 
-    \App\Models\Asesmen::create([
-        'pendaftaran_id' => $pendaftaran_id,
-        'guru_id' => $isGuru ? auth()->id() : null,
-        'skor' => array_sum($request->pendengaran)
-               + array_sum($request->berbakat)
-               + array_sum($request->kesulitan),
-        'hasil_asesmen' => json_encode([
-            'pendengaran' => $request->pendengaran,
-            'berbakat' => $request->berbakat,
-            'kesulitan' => $request->kesulitan,
-        ]),
-        'rekomendasi' => $request->kesimpulan,
-    ]);
+            'tunadaksa' => 'required|array',
+            'tunadaksa.*' => 'integer|min:1|max:5',
 
-    return back()->with('success', 'Asesmen berhasil disimpan.');
-}
+            'tunalaras' => 'required|array',
+            'tunalaras.*' => 'integer|min:1|max:5',
 
+            'berbakat' => 'required|array',
+            'berbakat.*' => 'integer|min:1|max:5',
 
-public function detail()
-{
-    $pendaftaran = \App\Models\Pendaftaran::where('user_id', auth()->id())->first();
+            'lamban_belajar' => 'required|array',
+            'lamban_belajar.*' => 'integer|min:1|max:5',
 
-    if (!$pendaftaran) return redirect()->route('dashboard.pendaftar');
+            'kesulitan_belajar' => 'required|array',
+            'kesulitan_belajar.*' => 'integer|min:1|max:5',
 
-    $asesmen = \App\Models\Asesmen::where('pendaftaran_id', $pendaftaran->id)->first();
-    if (!$asesmen) return redirect()->route('asesmen');
+            'kesimpulan' => 'required|string',
+        ];
 
-    $jawaban = json_decode($asesmen->hasil_asesmen ?? '{}', true);
+        $validated = $request->validate($rules);
 
-    return view('asesmen.detail', compact('asesmen', 'jawaban'));
-}
+        $pendaftaran_id = $isGuru
+            ? $validated['pendaftaran_id']
+            : Pendaftaran::where('user_id', auth()->id())->first()?->id;
 
-    
+        // Cek apakah asesmen sudah ada untuk pendaftar ini
+        if (Asesmen::where('pendaftaran_id', $pendaftaran_id)->exists()) {
+            return back()->with('error', 'Asesmen untuk pendaftar ini sudah pernah diisi.');
+        }
+
+        // Hitung skor total
+        $skor = 0;
+        foreach ([
+            'gangguan_penglihatan',
+            'gangguan_pendengaran',
+            'tunagrahita',
+            'tunadaksa',
+            'tunalaras',
+            'berbakat',
+            'lamban_belajar',
+            'kesulitan_belajar'
+        ] as $key) {
+            $skor += array_sum($validated[$key]);
+        }
+
+        // Batasi skor maksimal 100
+        $skor = min($skor, 100);
+
+        // Simpan ke DB
+        Asesmen::create([
+            'pendaftaran_id' => $pendaftaran_id,
+            'guru_id' => $isGuru ? auth()->id() : null,
+            'skor' => $skor,
+            'hasil_asesmen' => json_encode([
+                'gangguan_penglihatan' => $validated['gangguan_penglihatan'],
+                'gangguan_pendengaran' => $validated['gangguan_pendengaran'],
+                'tunagrahita' => $validated['tunagrahita'],
+                'tunadaksa' => $validated['tunadaksa'],
+                'tunalaras' => $validated['tunalaras'],
+                'berbakat' => $validated['berbakat'],
+                'lamban_belajar' => $validated['lamban_belajar'],
+                'kesulitan_belajar' => $validated['kesulitan_belajar'],
+            ]),
+            'rekomendasi' => $validated['kesimpulan'],
+        ]);
+
+        return redirect()->route('asesmen.index')->with('success', 'Asesmen berhasil disimpan.');
+    }
+
+    // Menampilkan detail asesmen untuk user yang login (pendaftar)
+    public function detail()
+    {
+        $pendaftaran = Pendaftaran::where('user_id', auth()->id())->first();
+
+        if (!$pendaftaran) return redirect()->route('dashboard.pendaftar');
+
+        $asesmen = Asesmen::where('pendaftaran_id', $pendaftaran->id)->first();
+
+        if (!$asesmen) return redirect()->route('asesmen');
+
+        $jawaban = json_decode($asesmen->hasil_asesmen ?? '{}', true);
+
+        return view('asesmen.detail', compact('asesmen', 'jawaban'));
+    }
 }

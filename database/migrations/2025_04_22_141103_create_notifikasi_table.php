@@ -14,7 +14,7 @@ class CreateNotifikasiTable extends Migration
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->text('pesan');
             $table->enum('status', ['belum dibaca', 'dibaca'])->default('belum dibaca');
-            $table->timestamp('created_at')->useCurrent();
+            $table->timestamps();
         });
     }
 

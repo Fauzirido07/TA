@@ -14,9 +14,10 @@ class GuruController extends Controller
 
     public function pilihSiswa()
     {
-        $pendaftar = \App\Models\Pendaftaran::with('user')->get();
+        $pendaftar = \App\Models\Pendaftaran::with('asesmen')->get(); 
         return view('guru.pilih_siswa', compact('pendaftar'));
     }
+
 
     public function isiAsesmen($id)
     {

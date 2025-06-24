@@ -1,23 +1,26 @@
 @extends('layouts.app')
 
-@section('content')
-<div class="container">
+@section('title', 'Monitoring Asesmen Siswa')
 
-    <div class="mb-4">
-        <a href="{{ route('admin.dashboard') }}" class="btn btn-outline-dark">⬅ Kembali ke Dashboard</a>
+@section('content')
+<div class="container" style="max-width: 900px; margin: 30px auto;">
+
+    <div class="mt-4">
+        <a href="{{ route('admin.dashboard') }}" class="btn btn-outline-dark mb-4">
+            ⬅ Kembali ke Dashboard
+        </a>
     </div>
 
-    <h2 class="mb-4">📊 Monitoring Asesmen Siswa</h2>
+    <h2 class="mb-4 text-center">📊 Monitoring Asesmen Siswa</h2>
 
     {{-- Chart Bar --}}
-    <canvas id="chartAsesmen" width="400" height="200"></canvas>
+    <div class="shadow-sm p-3 mb-5 bg-white rounded">
+        <canvas id="chartAsesmen" style="max-height: 300px;"></canvas>
+    </div>
 
-    <hr class="my-5">
-
-    {{-- Chart Pie --}}
-    <h4 class="mb-3">Persentase Asesmen</h4>
-    <div class="d-flex justify-content-center">
-        <canvas id="pieAsesmen" width="180" height="180"></canvas>
+    <h4 class="mb-3 text-center">Persentase Asesmen</h4>
+    <div class="d-flex justify-content-center shadow-sm p-3 bg-white rounded">
+        <canvas id="pieAsesmen" style="max-height: 250px;"></canvas>
     </div>
 
 </div>
@@ -58,7 +61,10 @@
             responsive: true,
             scales: {
                 y: {
-                    beginAtZero: true
+                    beginAtZero: true,
+                    ticks: {
+                        precision:0
+                    }
                 }
             }
         }

@@ -1,27 +1,41 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container text-center">
-    <h2 class="mb-4">Dashboard Guru</h2>
+<div class="container py-5">
+    <h2 class="text-center mb-5 fw-bold">Dashboard Guru</h2>
 
     @if(session('success'))
-        <div class="alert alert-success">{{ session('success') }}</div>
+        <div class="alert alert-success text-center">{{ session('success') }}</div>
     @endif
 
     @if(session('info'))
-        <div class="alert alert-info">{{ session('info') }}</div>
+        <div class="alert alert-info text-center">{{ session('info') }}</div>
     @endif
 
-    <div class="row justify-content-center gy-3">
-        <div class="col-md-4">
-            <a href="{{ route('guru.asesmen.pilih') }}" class="btn btn-outline-primary w-100 p-3">
-                🧠 Asesmen Siswa
+    <div class="row g-4 justify-content-center">
+        {{-- Card 1: Asesmen Siswa --}}
+        <div class="col-12 col-sm-6 col-md-5 col-lg-4">
+            <a href="{{ route('guru.asesmen.pilih') }}" class="text-decoration-none">
+                <div class="card shadow-sm h-100 border-primary">
+                    <div class="card-body text-center">
+                        <div class="display-4 text-primary mb-3">🧠</div>
+                        <h5 class="card-title text-primary fw-semibold">Asesmen Siswa</h5>
+                        <p class="card-text text-muted">Beri penilaian kepada siswa berdasarkan hasil asesmen mereka.</p>
+                    </div>
+                </div>
             </a>
         </div>
 
-        <div class="col-md-4">
-            <a href="{{ route('guru.asesmen.daftar') }}" class="btn btn-outline-success w-100 p-3">
-                📋 Lihat Detail Asesmen
+        {{-- Card 2: Lihat Detail Asesmen --}}
+        <div class="col-12 col-sm-6 col-md-5 col-lg-4">
+            <a href="{{ route('guru.asesmen.daftar') }}" class="text-decoration-none">
+                <div class="card shadow-sm h-100 border-success">
+                    <div class="card-body text-center">
+                        <div class="display-4 text-success mb-3">📋</div>
+                        <h5 class="card-title text-success fw-semibold">Lihat Detail Asesmen</h5>
+                        <p class="card-text text-muted">Tinjau daftar hasil asesmen yang telah dinilai.</p>
+                    </div>
+                </div>
             </a>
         </div>
     </div>
