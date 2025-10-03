@@ -1,11 +1,13 @@
 @extends('layouts.app')
 
+@section('title', 'Dashboard Admin')
+
 @section('content')
 <div class="container py-5">
     <h2 class="text-center mb-5 fw-bold">Dashboard Admin</h2>
 
     <div class="row g-4 justify-content-center">
-        {{-- Card 1 --}}
+        {{-- Jadwal Asesmen --}}
         <div class="col-12 col-sm-6 col-md-4">
             <a href="{{ route('admin.jadwal') }}" class="text-decoration-none">
                 <div class="card shadow-sm h-100 border-warning">
@@ -18,7 +20,7 @@
             </a>
         </div>
 
-        {{-- Card 2 --}}
+        {{-- Manajemen Guru & Staff --}}
         <div class="col-12 col-sm-6 col-md-4">
             <a href="{{ route('admin.users') }}" class="text-decoration-none">
                 <div class="card shadow-sm h-100 border-primary">
@@ -31,7 +33,7 @@
             </a>
         </div>
 
-        {{-- Card 3 --}}
+        {{-- Prosedur Pendaftaran --}}
         <div class="col-12 col-sm-6 col-md-4">
             <a href="{{ route('admin.prosedur') }}" class="text-decoration-none">
                 <div class="card shadow-sm h-100 border-info">
@@ -44,7 +46,7 @@
             </a>
         </div>
 
-        {{-- Card 4 --}}
+        {{-- Monitoring Asesmen --}}
         <div class="col-12 col-sm-6 col-md-4">
             <a href="{{ route('admin.chart') }}" class="text-decoration-none">
                 <div class="card shadow-sm h-100 border-success">
@@ -56,6 +58,20 @@
                 </div>
             </a>
         </div>
+
+        {{-- Manajemen Pendaftar --}}
+        <div class="col-12 col-sm-6 col-md-4">
+            <a href="{{ route('admin.pendaftar') }}" class="text-decoration-none">
+                <div class="card shadow-sm h-100 border-danger">
+                    <div class="card-body text-center">
+                        <div class="display-4 text-danger mb-3">📋</div>
+                        <h5 class="card-title text-danger fw-semibold">Manajemen Pendaftar</h5>
+                        <p class="card-text text-muted">Lihat dan ubah status pendaftar.</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+
     </div>
 </div>
 @endsection

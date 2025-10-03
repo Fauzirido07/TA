@@ -4,14 +4,6 @@
 <div class="container py-5">
     <h2 class="text-center mb-5 fw-bold">Dashboard Guru</h2>
 
-    @if(session('success'))
-        <div class="alert alert-success text-center">{{ session('success') }}</div>
-    @endif
-
-    @if(session('info'))
-        <div class="alert alert-info text-center">{{ session('info') }}</div>
-    @endif
-
     <div class="row g-4 justify-content-center">
         {{-- Card 1: Asesmen Siswa --}}
         <div class="col-12 col-sm-6 col-md-5 col-lg-4">

@@ -63,7 +63,31 @@
             </div>
         </div>
     </div>
+
+    <div class="row justify-content-center mt-5">
+        <div class="col-md-8 col-lg-7">
+            <div class="card shadow-sm p-4 bg-light rounded-4">
+                <h4 class="mb-3 fw-semibold text-primary">
+                    <i class="bi bi-building me-2"></i> 📌 Prosedur Pendaftaran 
+                </h4>
+                <p class="mb-3">Silakan ikuti langkah-langkah berikut untuk melakukan pendaftaran di SLB-B Dharma Wanita Sidoarjo:</p>
+                @if($prosedur->isEmpty())
+                    <div class="alert alert-warning text-center shadow-sm">
+                        <i class="bi bi-exclamation-circle-fill"></i> Belum ada prosedur yang ditambahkan.
+                    </div>
+                @else
+                    <ol class="list-group list-group-numbered mb-4">
+                        @foreach($prosedur as $p)
+                            <li class="list-group-item">{{ $p->deskripsi }}</li>
+                        @endforeach
+                    </ol>
+                @endif
+            </div>
+        </div>
+    </div>
 </div>
+
+
 @endsection
 
 @push('styles')

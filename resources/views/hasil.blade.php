@@ -33,7 +33,6 @@
 
         <div class="mt-3 text-center">
             <a href="{{ route('hasil.pdf') }}" class="btn btn-outline-primary me-2">📄 Unduh PDF</a>
-            <a href="{{ route('dashboard.pendaftar') }}" class="btn btn-secondary">⬅ Kembali ke Dashboard</a>
         </div>
     @else
         <div class="alert alert-info text-center shadow-sm">

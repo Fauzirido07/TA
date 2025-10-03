@@ -19,16 +19,18 @@
         <table class="table table-bordered table-hover align-middle">
             <thead class="table-light text-center">
                 <tr>
-                    <th style="width: 25%;">Tanggal</th>
+                    <th style="width: 20%;">nama</th>
+                    <th style="width: 20%;">Tanggal</th>
                     <th style="width: 20%;">Waktu</th>
-                    <th style="width: 30%;">Lokasi</th>
-                    <th style="width: 25%;">Aksi</th>
+                    <th style="width: 20%;">Lokasi</th>
+                    <th style="width: 20%;">Aksi</th>
                 </tr>
             </thead>
             <tbody>
                 @forelse($jadwal as $item)
                     <tr>
-                        <td class="text-center">{{ \Carbon\Carbon::parse($item->tanggal)->translatedFormat('d F Y') }}</td>
+                        <td>{{ $item->pendaftaran->nama_lengkap }}</td>
+                        <td class="text-center">{{ $item->tanggal->format('d F Y') }}</td>
                         <td class="text-center">{{ $item->waktu }}</td>
                         <td>{{ $item->lokasi }}</td>
                         <td class="text-center">

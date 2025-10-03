@@ -15,7 +15,7 @@ class AsesmenController extends Controller
             // Ambil semua pendaftar beserta asesmen (eager loading)
             $pendaftar = Pendaftaran::with('asesmen')->get();
 
-            return view('asesmen', compact('pendaftar'));
+            return view('guru.asesmen.pilih', compact('pendaftar'));
         }
 
         return redirect()->route('dashboard.pendaftar')
@@ -25,6 +25,7 @@ class AsesmenController extends Controller
     // Menampilkan form asesmen untuk pendaftar tertentu
     public function form($pendaftaranId)
     {
+
         $pendaftaran = Pendaftaran::findOrFail($pendaftaranId);
 
         // Cek apakah sudah ada asesmen untuk pendaftar ini
@@ -119,7 +120,7 @@ class AsesmenController extends Controller
             'rekomendasi' => $validated['kesimpulan'],
         ]);
 
-        return redirect()->route('asesmen.index')->with('success', 'Asesmen berhasil disimpan.');
+        return redirect()->route('guru.dashboard')->with('success', 'Asesmen berhasil disimpan.');
     }
 
     // Menampilkan detail asesmen untuk user yang login (pendaftar)

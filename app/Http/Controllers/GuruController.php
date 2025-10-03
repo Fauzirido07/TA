@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Asesmen;
 use App\Models\Pendaftaran;
+use App\Models\FormAsesmenHeader;
 
 class GuruController extends Controller
 {
@@ -21,6 +22,9 @@ class GuruController extends Controller
 
     public function isiAsesmen($id)
     {
+        $formAsesmenHeader = FormAsesmenHeader::all();
+        // dd($formAsesmenHeader->first()->formAsesmen);
+
         $pendaftaran = Pendaftaran::findOrFail($id);
         return view('guru.isi_asesmen', compact('pendaftaran'));
     }

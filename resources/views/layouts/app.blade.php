@@ -107,6 +107,7 @@
                     <a href="{{ route('hasil') }}" class="list-group-item list-group-item-action">📊 Hasil Asesmen</a>
                 @elseif(Auth::user()->role === 'staff' || Auth::user()->role === 'admin')
                     <a href="{{ route('admin.dashboard') }}" class="list-group-item list-group-item-action">🏠 Dashboard</a>
+                    <a href="{{ route('admin.notifikasi') }}" class="list-group-item list-group-item-action">🔔 Notifikasi</a>
                     <a href="{{ route('admin.jadwal.create') }}" class="list-group-item list-group-item-action">📆 Jadwal</a>
                     <a href="{{ route('admin.users') }}" class="list-group-item list-group-item-action">👥 Pengguna</a>
                     <a href="{{ route('admin.prosedur') }}" class="list-group-item list-group-item-action">📋 Prosedur</a>

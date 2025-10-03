@@ -4,11 +4,11 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\{
     AuthController, PendaftaranController, AsesmenController, JadwalController,
     HasilController, NotifikasiController, AdminController, ProsedurController,
-    PendaftarController
+    PendaftarController, LandingPageController
 };
 
 // Halaman utama
-Route::get('/', fn() => view('landing'))->name('home');
+Route::get('/', [LandingPageController::class, 'landingPage'])->name('home'); 
 
 // Autentikasi
 Route::view('/login', 'login')->name('login');
@@ -27,7 +27,7 @@ Route::middleware(['auth', 'role:staff'])->group(function () {
     // Dashboard Admin
     Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
     
-    // Manajemen User
+    // Manajemen Guru dan Staff
     Route::get('/admin/users', [AdminController::class, 'users'])->name('admin.users');
     Route::post('/admin/users/update-role', [AdminController::class, 'updateRole'])->name('admin.updateRole');
     Route::post('/admin/users/delete/{id}', [AdminController::class, 'deleteUser'])->name('admin.users.delete');
@@ -36,14 +36,12 @@ Route::middleware(['auth', 'role:staff'])->group(function () {
     Route::get('/admin/users/add', [AdminController::class, 'createUser'])->name('admin.users.create');
     Route::post('/admin/users/add', [AdminController::class, 'addUser'])->name('admin.users.add');
 
-    
     // Manajemen Prosedur
     Route::get('/prosedurs', [ProsedurController::class, 'adminIndex'])->name('admin.prosedur');
     Route::post('/prosedur', [ProsedurController::class, 'store'])->name('admin.prosedur.store');
     Route::get('/prosedur/edit/{id}', [ProsedurController::class, 'edit'])->name('admin.prosedur.edit');
     Route::post('/prosedur/update/{id}', [ProsedurController::class, 'update'])->name('admin.prosedur.update');
     Route::post('/prosedur/delete/{id}', [ProsedurController::class, 'destroy'])->name('admin.prosedur.destroy');
-
 
     // Manajemen Jadwal
     Route::prefix('admin')->group(function () {
@@ -57,6 +55,15 @@ Route::middleware(['auth', 'role:staff'])->group(function () {
 
     // Chart
     Route::get('/admin/chart', [\App\Http\Controllers\AdminController::class, 'chart'])->name('admin.chart');
+
+    // Notifikasi
+    Route::get('/admin/notifikasi', [NotifikasiController::class, 'adminIndex'])->name('admin.notifikasi');
+    Route::post('/admin/pendaftaran/{id}/update-status', [AdminController::class, 'updatePendaftaranStatus'])->name('admin.pendaftar.updateStatus');
+
+    // Kelola Pendaftar
+    Route::get('/admin/pendaftar', [AdminController::class, 'pendaftar'])->name('admin.pendaftar');
+    Route::post('/admin/pendaftar/{id}/status', [AdminController::class, 'updatePendaftaranStatus'])->name('admin.pendaftar.updateStatus');
+
 
 });
 
@@ -109,15 +116,6 @@ Route::middleware(['auth', 'role:pendaftar'])->group(function () {
     Route::get('/prosedur', [ProsedurController::class, 'showForPendaftar'])->name('prosedur');
 
 });
-
-
-// ===================================================
-// ================== NOTIFIKASI UMUM ================
-// ===================================================
-Route::middleware('auth')->group(function () {
-    Route::get('/notifikasi', [NotifikasiController::class, 'index'])->name('notifikasi');
-});
-
 
 // ================== Laporan (opsional) =============
 Route::get('/laporan', [HasilController::class, 'cetakLaporan'])->name('laporan');

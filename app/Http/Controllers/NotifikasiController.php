@@ -8,19 +8,18 @@ use Illuminate\Http\Request;
 class NotifikasiController extends Controller
 {
     public function index()
-{
-    $notifikasi = \App\Models\Notifikasi::where('user_id', auth()->id())
-                    ->orderBy('created_at', 'desc')
-                    ->get();
+    {
+        $notifikasi = \App\Models\Notifikasi::where('user_id', auth()->id())
+                        ->orderBy('created_at', 'desc')
+                        ->get();
 
-    // Tandai semua notifikasi sebagai "dibaca" setelah dilihat
-    \App\Models\Notifikasi::where('user_id', auth()->id())
-        ->where('status', 'belum_dibaca')
-        ->update(['status' => 'dibaca']);
+        // Tandai semua notifikasi sebagai "dibaca" setelah dilihat
+        \App\Models\Notifikasi::where('user_id', auth()->id())
+            ->where('status', 'belum_dibaca')
+            ->update(['status' => 'dibaca']);
 
-    return view('notifikasi.index', compact('notifikasi'));
-}
-
+        return view('notifikasi.index', compact('notifikasi'));
+    }
 
     public function store(Request $request)
     {
@@ -32,4 +31,18 @@ class NotifikasiController extends Controller
 
         return response()->json(['message' => 'Notifikasi berhasil dikirim']);
     }
+
+    public function adminIndex()
+    {
+        $notifikasi = \App\Models\Notifikasi::where('user_id', auth()->id())
+                        ->orderBy('created_at', 'desc')
+                        ->get();
+
+        \App\Models\Notifikasi::where('user_id', auth()->id())
+            ->where('status', 'belum_dibaca')
+            ->update(['status' => 'dibaca']);
+
+        return view('admin.notifikasi', compact('notifikasi'));
+    }
+
 }

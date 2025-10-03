@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Pendaftaran;
 use App\Models\Asesmen;
+use App\Models\Notifikasi;
 use Illuminate\Http\Request; 
 
 class AdminController extends Controller
@@ -84,6 +85,42 @@ class AdminController extends Controller
         $belumAsesmenP = $pendaftar->where('jenis_kelamin', 'P')->filter(fn($i) => !$i->asesmen()->exists())->count();
 
         return view('admin.chart', compact('sudahAsesmenL', 'sudahAsesmenP', 'belumAsesmenL', 'belumAsesmenP', 'total_sudah', 'total_belum'));
+    }
+    
+    public function updatePendaftaranStatus(Request $request, $id)
+    {
+        $request->validate([
+            'status' => 'required|in:pending,diproses,diterima,ditolak'
+        ]);
+
+        try {
+            $pendaftar = Pendaftaran::findOrFail($id);
+            if ($pendaftar->status === $request->status) {
+                return back()->with('info', 'Status pendaftaran tidak berubah.');
+            }
+
+            \DB::beginTransaction();
+            $pendaftar->status = $request->status;
+            $pendaftar->save();
+
+            Notifikasi::create([
+                'user_id' => $pendaftar->user_id,
+                'pesan' => 'Status pendaftaran Anda kini: ' . ucfirst($request->status),
+                'status' => 'belum dibaca',
+            ]);
+            \DB::commit();
+
+            return back()->with('success', 'Status pendaftaran berhasil diperbarui.');
+        } catch (\Exception $e) {
+            \DB::rollBack();
+            return back()->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
+        }
+    }
+
+    public function pendaftar()
+    {
+        $pendaftar = Pendaftaran::with('user')->get();
+        return view('admin.pendaftar', compact('pendaftar'));
     }
 
 }
