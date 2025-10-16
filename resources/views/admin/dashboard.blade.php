@@ -72,6 +72,19 @@
             </a>
         </div>
 
+        {{-- Ubah Form Asesmen --}}
+        <div class="col-12 col-sm-6 col-md-4">
+            <a href="{{ route('admin.ubah_asesmen.index') }}" class="text-decoration-none">
+                <div class="card shadow-sm h-100 border-secondary">
+                    <div class="card-body text-center">
+                        <div class="display-4 text-secondary mb-3">🧩</div>
+                        <h5 class="card-title text-secondary fw-semibold">Ubah Form Asesmen</h5>
+                        <p class="card-text text-muted">Kelola pertanyaan dan format asesmen.</p>
+                    </div>
+                </div>
+            </a>
+        </div>                        
+
     </div>
 </div>
 @endsection

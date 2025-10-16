@@ -43,8 +43,36 @@ class GuruController extends Controller
         abort(403, 'Anda tidak berhak melihat asesmen ini.');
     }
 
-    $jawaban = json_decode($asesmen->hasil_asesmen ?? '{}', true);
+    $maxPerGejala = 5;
+    $totalSkor = $asesmen->skor ?? 0;
+    $totalGejala = 0;
 
-    return view('guru.detail_asesmen', compact('asesmen', 'jawaban'));
+    $hasilAsesmen = \App\Models\HasilAsesmen::where('asesmen_id', $asesmen->id)
+        ->with('formAsesmen')
+        ->get();
+
+    foreach ($hasilAsesmen as $item) {
+        if ($item->formAsesmen->question_type == 1) {
+            $totalGejala++;
+        }
+    }
+
+    $maxSkor = $totalGejala * $maxPerGejala;
+    $persen = $maxSkor > 0 ? round(($totalSkor / $maxSkor) * 100) : 0;
+
+    $hasilAsesmen = \App\Models\HasilAsesmen::where('asesmen_id', $asesmen->id)
+        ->join('form_asesmen', 'hasil_asesmen.form_asesmen_id', '=', 'form_asesmen.id')
+        ->join('form_asesmen_header', 'form_asesmen.form_asesmen_header_id', '=', 'form_asesmen_header.id')
+        ->select(
+            'hasil_asesmen.*',
+            'form_asesmen.form_asesmen_header_id',
+            'form_asesmen_header.title as header_title',
+        )
+        ->get()
+        ->groupBy('form_asesmen_header_id');
+
+
+
+    return view('guru.detail_asesmen', compact('asesmen', 'totalSkor', 'maxSkor', 'persen', 'hasilAsesmen'));
 }
 }

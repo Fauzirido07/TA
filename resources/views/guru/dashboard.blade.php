@@ -30,6 +30,19 @@
                 </div>
             </a>
         </div>
+
+        {{-- Card 3: Asesmen Dinamis --}}
+        <div class="col-12 col-sm-6 col-md-5 col-lg-4">
+            <a href="{{ route('guru.asesmen_dinamis.pilih') }}" class="text-decoration-none">
+                <div class="card shadow-sm h-100 border-warning">
+                    <div class="card-body text-center">
+                        <div class="display-4 text-warning mb-3">🧩</div>
+                        <h5 class="card-title text-warning fw-semibold">Asesmen Dinamis</h5>
+                        <p class="card-text text-muted">Isi form asesmen dinamis untuk siswa tertentu.</p>
+                    </div>
+                </div>
+            </a>
+        </div>
     </div>
 </div>
 @endsection

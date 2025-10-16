@@ -14,6 +14,17 @@
     <h2 class="mb-4 text-center">🔍 Detail Asesmen</h2>
 
     @php
+        $maxPerGejala = 5;
+        $totalSkor = $asesmen->skor ?? 0;
+
+        // Hitung jumlah gejala total dari jawaban
+        $totalGejala = 0;
+        foreach ($jawaban as $kategoriJawaban) {
+            $totalGejala += count($kategoriJawaban);
+        }
+
+        $maxSkor = $totalGejala * $maxPerGejala;
+        $persen = $maxSkor > 0 ? round(($totalSkor / $maxSkor) * 100) : 0;
 
         if ($persen <= 50) {
             $huruf = 'D (Perlu Bimbingan)';
@@ -52,16 +63,33 @@
 
     <h4 class="mt-4">📌 Jawaban Detail</h4>
 
-    @foreach($hasilAsesmen as $key => $hasil)
-        <h5 class="mt-3">{{ $hasil->first()->header_title }}</h5>
+    @php
+        $kategori = [
+            'A. Gangguan Penglihatan' => 'gangguan_penglihatan',
+            'B. Gangguan Pendengaran' => 'gangguan_pendengaran',
+            'C. Tunagrahita' => 'tunagrahita',
+            'D. Tunadaksa (Kelainan Gerak Tubuh)' => 'tunadaksa',
+            'E. Tunalaras (Emosi dan Perilaku)' => 'tunalaras',
+            'F. Anak Berbakat' => 'berbakat',
+            'G. Anak Lamban Belajar' => 'lamban_belajar',
+            'H. Anak Kesulitan Belajar Spesifik' => 'kesulitan_belajar',
+        ];
+    @endphp
+
+    @foreach($kategori as $judul => $key)
+        <h5 class="mt-3">{{ $judul }}</h5>
+        @if(!empty($jawaban[$key]))
             <ul class="list-group mb-3 shadow-sm">
-                @foreach($hasil as $item)
+                @foreach($jawaban[$key] as $i => $score)
                     <li class="list-group-item d-flex justify-content-between align-items-center">
-                       {{ $item->formAsesmen->question }}
-                        <span class="badge bg-primary rounded-pill">Skor {{ $item->jawaban }}</span>
+                        Gejala {{ $i + 1 }}
+                        <span class="badge bg-primary rounded-pill">Skor {{ $score }}</span>
                     </li>
                 @endforeach
             </ul>
+        @else
+            <div class="text-muted fst-italic">Tidak ada data.</div>
+        @endif
     @endforeach
 
 </div>

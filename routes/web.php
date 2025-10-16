@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\{
     AuthController, PendaftaranController, AsesmenController, JadwalController,
     HasilController, NotifikasiController, AdminController, ProsedurController,
-    PendaftarController, LandingPageController
+    PendaftarController, LandingPageController, FormAsesmenController
 };
 
 // Halaman utama
@@ -64,6 +64,13 @@ Route::middleware(['auth', 'role:staff'])->group(function () {
     Route::get('/admin/pendaftar', [AdminController::class, 'pendaftar'])->name('admin.pendaftar');
     Route::post('/admin/pendaftar/{id}/status', [AdminController::class, 'updatePendaftaranStatus'])->name('admin.pendaftar.updateStatus');
 
+    // Ubah Form Asesmen
+    Route::get('/ubah-asesmen', [FormAsesmenController::class, 'index'])->name('admin.ubah_asesmen.index');
+    Route::get('/ubah-asesmen/create', [FormAsesmenController::class, 'create'])->name('admin.ubah_asesmen.create');
+    Route::post('/ubah-asesmen/store', [FormAsesmenController::class, 'store'])->name('admin.ubah_asesmen.store');
+    Route::get('/ubah-asesmen/edit/{id}', [FormAsesmenController::class, 'edit'])->name('admin.ubah_asesmen.edit');
+    Route::post('/ubah-asesmen/update/{id}', [FormAsesmenController::class, 'update'])->name('admin.ubah_asesmen.update');
+    Route::delete('/ubah-asesmen/{id}', [FormAsesmenController::class, 'destroy'])->name('admin.ubah_asesmen.destroy');
 
 });
 
@@ -82,6 +89,12 @@ Route::middleware(['auth', 'role:guru'])->group(function () {
     Route::get('/guru/asesmen/isi/{id}', [\App\Http\Controllers\GuruController::class, 'isiAsesmen'])->name('guru.asesmen.isi');
     Route::get('/guru/asesmen/daftar', [\App\Http\Controllers\GuruController::class, 'daftarAsesmen'])->name('guru.asesmen.daftar');
     Route::get('/guru/asesmen/detail/{id}', [\App\Http\Controllers\GuruController::class, 'detailAsesmen'])->name('guru.asesmen.detail');
+
+
+    // Asesmen Dinamis
+    Route::get('/asesmen-dinamis', [\App\Http\Controllers\GuruAsesmenDinamisController::class, 'pilihSiswa'])->name('guru.asesmen_dinamis.pilih');
+    Route::get('/asesmen-dinamis/isi/{id}', [\App\Http\Controllers\GuruAsesmenDinamisController::class, 'isiForm'])->name('guru.asesmen_dinamis.isi');
+    Route::post('/asesmen-dinamis/store/{id}', [\App\Http\Controllers\GuruAsesmenDinamisController::class, 'store'])->name('guru.asesmen_dinamis.store');
 });
 
 
