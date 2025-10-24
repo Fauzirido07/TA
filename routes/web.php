@@ -71,7 +71,8 @@ Route::middleware(['auth', 'role:staff'])->group(function () {
     Route::get('/ubah-asesmen/edit/{id}', [FormAsesmenController::class, 'edit'])->name('admin.ubah_asesmen.edit');
     Route::post('/ubah-asesmen/update/{id}', [FormAsesmenController::class, 'update'])->name('admin.ubah_asesmen.update');
     Route::delete('/ubah-asesmen/{id}', [FormAsesmenController::class, 'destroy'])->name('admin.ubah_asesmen.destroy');
-
+    Route::get('/ubah-asesmen/create-kategori', [FormAsesmenController::class, 'createHeader'])->name('admin.ubah_asesmen.create_kategori');
+    Route::post('/ubah-asesmen/store-kategori', [FormAsesmenController::class, 'storeHeader'])->name('admin.ubah_asesmen.store_kategori');
 });
 
 

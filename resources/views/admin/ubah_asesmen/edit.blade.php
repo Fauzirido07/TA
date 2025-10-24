@@ -52,6 +52,13 @@
             </select>
         </div>
 
+        <div>   
+            {{-- Urutan Tampilan --}}
+            <div class="mb-3">
+                <label for="order" class="form-label">Urutan Tampilan</label>
+                <input type="number" name="order" id="order" class="form-control" value="{{ old('order', $form->order) }}" required>
+            </div>
+
         <button type="submit" class="btn btn-warning">💾 Update Pertanyaan</button>
     </form>
 </div>

@@ -9,7 +9,7 @@ class FormAsesmen extends Model
 {
     use HasFactory;
     protected $table = 'form_asesmen';
-    protected $fillable = ['form_asesmen_header_id', 'question', 'question_type'];
+    protected $fillable = ['form_asesmen_header_id', 'question', 'question_type', 'order'];
 
     public function formAsesmenHeader()
     {

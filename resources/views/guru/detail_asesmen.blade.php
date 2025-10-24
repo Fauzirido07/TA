@@ -55,7 +55,7 @@
     @foreach($hasilAsesmen as $key => $hasil)
         <h5 class="mt-3">{{ $hasil->first()->header_title }}</h5>
             <ul class="list-group mb-3 shadow-sm">
-                @foreach($hasil as $item)
+                @foreach($hasil->sortBy('order') as $item)
                     <li class="list-group-item d-flex justify-content-between align-items-center">
                        {{ $item->formAsesmen->question }}
                         <span class="badge bg-primary rounded-pill">Skor {{ $item->jawaban }}</span>

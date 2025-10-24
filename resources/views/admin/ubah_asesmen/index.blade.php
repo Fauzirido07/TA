@@ -5,8 +5,8 @@
     <h2 class="mb-4">🧩 Ubah Form Asesmen</h2>
 
     <a href="{{ route('admin.ubah_asesmen.create') }}" class="btn btn-primary mb-3">➕ Tambah Form Baru</a>
-
-    @foreach($headers as $header)
+    <a href="{{ route('admin.ubah_asesmen.create_kategori') }}" class="btn btn-primary mb-3">➕ Tambah Kategori Baru</a>
+    @foreach($headers->sortBy('order') as $header)
         <div class="card mb-3">
             <div class="card-header d-flex justify-content-between align-items-center">
                 <strong>{{ $header->title }}</strong>
@@ -19,11 +19,12 @@
                             <th style="width: 60px;">No</th>
                             <th>Pertanyaan</th>
                             <th style="width: 150px;">Tipe</th>
+                            <th>Order</th>
                             <th style="width: 180px;">Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @forelse($header->formAsesmen as $index => $form)
+                        @forelse($header->formAsesmen->sortBy('order') as $index => $form)
                             <tr>
                                 <td class="text-center">{{ $index + 1 }}</td>
                                 <td>{{ $form->question }}</td>
@@ -36,6 +37,7 @@
                                         -
                                     @endif
                                 </td>
+                                <td class="text-center">{{ $form->order }}</td>
                                 <td class="text-center">
                                     <div class="d-flex justify-content-center gap-2">
                                         {{-- Tombol Edit --}}

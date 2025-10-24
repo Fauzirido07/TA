@@ -26,9 +26,10 @@ class FormAsesmenController extends Controller
         'form_asesmen_header_id' => 'required|exists:form_asesmen_header,id',
         'question' => 'required|string|max:255',
         'question_type' => 'required|in:1,2',
+        'order' => 'required|integer',
         ]);
 
-        FormAsesmen::create($request->only(['form_asesmen_header_id', 'question', 'question_type']));
+        FormAsesmen::create($request->only(['form_asesmen_header_id', 'question', 'question_type', 'order']));
         return redirect()->route('admin.ubah_asesmen.index')->with('success', 'Form asesmen berhasil ditambahkan.');
     }
 
@@ -46,6 +47,7 @@ class FormAsesmenController extends Controller
         'form_asesmen_header_id' => 'required|exists:form_asesmen_header,id',
         'question' => 'required|string|max:255',
         'question_type' => 'required|in:1,2',
+        'order' => 'required|integer',
     ]);
 
     $form = \App\Models\FormAsesmen::findOrFail($id);
@@ -54,6 +56,7 @@ class FormAsesmenController extends Controller
         'form_asesmen_header_id' => $request->form_asesmen_header_id,
         'question' => $request->question,
         'question_type' => $request->question_type,
+        'order' => $request->order,
     ]);
 
     return redirect()->route('admin.ubah_asesmen.index')->with('success', 'Pertanyaan asesmen berhasil diperbarui!');
@@ -66,6 +69,28 @@ class FormAsesmenController extends Controller
     $form->delete();
 
     return redirect()->route('admin.ubah_asesmen.index')->with('success', 'Pertanyaan asesmen berhasil dihapus.');
+}
+
+    public function createHeader()
+{
+    return view('admin.ubah_asesmen.create_kategori');
+
+}
+
+public function storeHeader(Request $request)
+{
+    $request->validate([
+        'title' => 'required|string|max:255',
+        'order' => 'required|integer',
+    ]);
+
+    FormAsesmenHeader::create([
+        'title' => $request->title,
+        'order' => $request->order,
+    ]);
+
+    return redirect()->route('admin.ubah_asesmen.index')->with('success', 'Kategori asesmen berhasil ditambahkan.');
+
 }
 
 }

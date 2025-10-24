@@ -5,13 +5,14 @@ use App\Models\User;
 use App\Models\Pendaftaran;
 use App\Models\Asesmen;
 use App\Models\Notifikasi;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request; 
 
 class AdminController extends Controller
 {
     public function dashboard()
     {
-        return view('admin.dashboard');
+        return view('admin.dashboard_new');
     }
 
     public function users()
@@ -78,15 +79,27 @@ class AdminController extends Controller
         })->count();
         $total_belum = $total_siswa - $total_sudah;
 
+        // Data status pendaftaran
+        $dataStatus = Pendaftaran::select('status', DB::raw('count(*) as total'))
+            ->groupBy('status')
+            ->pluck('total', 'status')
+            ->toArray();
+
+        $statuses = ['pending', 'diproses', 'diterima', 'ditolak'];
+        $counts = [];
+        foreach ($statuses as $status) {
+            $counts[$status] = $dataStatus[$status] ?? 0;
+        }
+
         // Untuk bar chart gender
         $sudahAsesmenL = $pendaftar->where('jenis_kelamin', 'L')->filter(fn($i) => $i->asesmen()->exists())->count();
         $sudahAsesmenP = $pendaftar->where('jenis_kelamin', 'P')->filter(fn($i) => $i->asesmen()->exists())->count();
         $belumAsesmenL = $pendaftar->where('jenis_kelamin', 'L')->filter(fn($i) => !$i->asesmen()->exists())->count();
         $belumAsesmenP = $pendaftar->where('jenis_kelamin', 'P')->filter(fn($i) => !$i->asesmen()->exists())->count();
 
-        return view('admin.chart', compact('sudahAsesmenL', 'sudahAsesmenP', 'belumAsesmenL', 'belumAsesmenP', 'total_sudah', 'total_belum'));
+        return view('admin.chart', compact('sudahAsesmenL', 'sudahAsesmenP', 'belumAsesmenL', 'belumAsesmenP', 'total_sudah', 'total_belum', 'counts'));
     }
-    
+
     public function updatePendaftaranStatus(Request $request, $id)
     {
         $request->validate([

@@ -13,14 +13,15 @@
 
     <h2 class="mb-4 text-center">📊 Monitoring Asesmen Siswa</h2>
 
-    {{-- Chart Bar --}}
+    {{-- Chart Bar Asesmen --}}
     <div class="shadow-sm p-3 mb-5 bg-white rounded">
         <canvas id="chartAsesmen" style="max-height: 300px;"></canvas>
     </div>
 
-    <h4 class="mb-3 text-center">Persentase Asesmen</h4>
-    <div class="d-flex justify-content-center shadow-sm p-3 bg-white rounded">
-        <canvas id="pieAsesmen" style="max-height: 250px;"></canvas>
+    {{-- Chart Pie Status Pendaftaran --}}
+    <h4 class="text-center mb-3">📋 Status Pendaftaran Siswa</h4>
+    <div class="shadow-sm p-3 mb-5 bg-white rounded text-center">
+        <canvas id="chartStatus" style="max-width: 400px; max-height: 300px; margin: 0 auto;"></canvas>
     </div>
 
 </div>
@@ -28,7 +29,7 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
 <script>
-    // Bar Chart
+    // === CHART ASESMEN (BAR) ===
     const ctxBar = document.getElementById('chartAsesmen').getContext('2d');
     const barChart = new Chart(ctxBar, {
         type: 'bar',
@@ -62,57 +63,52 @@
             scales: {
                 y: {
                     beginAtZero: true,
-                    ticks: {
-                        precision:0
-                    }
+                    ticks: { precision: 0 }
                 }
             }
         }
     });
 
-    // Pie Chart
-    const ctxPie = document.getElementById('pieAsesmen').getContext('2d');
-    const pieChart = new Chart(ctxPie, {
+    // === CHART STATUS PENDAFTARAN (PIE) ===
+    const ctxPie = document.getElementById('chartStatus').getContext('2d');
+    const statusChart = new Chart(ctxPie, {
         type: 'pie',
         data: {
-            labels: ['Sudah Diasesmen', 'Belum Diasesmen'],
+            labels: ['Pending', 'Diproses', 'Diterima', 'Ditolak'],
             datasets: [{
                 data: [
-                    {{ $total_sudah }},
-                    {{ $total_belum }}
+                    {{ $counts['pending'] ?? 0 }},
+                    {{ $counts['diproses'] ?? 0 }},
+                    {{ $counts['diterima'] ?? 0 }},
+                    {{ $counts['ditolak'] ?? 0 }}
                 ],
                 backgroundColor: [
-                    'rgba(75, 192, 192, 0.7)',
-                    'rgba(255, 159, 64, 0.7)'
-                ],
-                borderColor: [
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(255, 159, 64, 1)'
+                    '#f39c12',
+                    '#3498db',
+                    '#2ecc71',
+                    '#e74c3c'
                 ],
                 borderWidth: 1
             }]
         },
         options: {
-            responsive: true,
             plugins: {
-                datalabels: {
-                    formatter: (value, context) => {
-                        let sum = context.chart.data.datasets[0].data.reduce((a, b) => a + b, 0);
-                        let percentage = (value * 100 / sum).toFixed(1) + "%";
-                        return percentage;
-                    },
-                    color: '#fff',
-                    font: {
-                        weight: 'bold',
-                        size: 12
-                    }
-                },
                 legend: {
                     position: 'bottom'
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            const dataset = context.dataset.data;
+                            const total = dataset.reduce((a, b) => a + b, 0);
+                            const value = context.parsed;
+                            const percent = ((value / total) * 100).toFixed(1);
+                            return `${context.label}: ${value} (${percent}%)`;
+                        }
+                    }
                 }
             }
-        },
-        plugins: [ChartDataLabels]
+        }
     });
 </script>
 @endsection

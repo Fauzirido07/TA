@@ -67,6 +67,8 @@ class GuruController extends Controller
             'hasil_asesmen.*',
             'form_asesmen.form_asesmen_header_id',
             'form_asesmen_header.title as header_title',
+            'form_asesmen.question_type',
+            'form_asesmen.order',
         )
         ->get()
         ->groupBy('form_asesmen_header_id');

@@ -13,25 +13,61 @@
 </head>
 <body>
     <h2>Laporan Hasil Asesmen</h2>
+    
+    @php
+
+        if ($persen <= 50) {
+            $huruf = 'D (Perlu Bimbingan)';
+        } elseif ($persen <= 65) {
+            $huruf = 'C (Cukup)';
+        } elseif ($persen <= 80) {
+            $huruf = 'B (Baik)';
+        } else {
+            $huruf = 'A (Sangat Baik)';
+        }
+    @endphp
+
     <table>
-        <thead>
             <tr>
-                <th>Nama Pendaftar</th>
-                <th>Skor</th>
-                <th>Rekomendasi</th>
-                <th>Jawaban Lengkap</th>
+                <th style="width: 30%;">Nama Pendaftar</th>
+                <td>{{ $asesmen->pendaftaran->nama_lengkap ?? '-' }}</td>
             </tr>
-        </thead>
-        <tbody>
+            <tr>
+                <th>Skor Total</th>
+                <td>
+                    {{ $totalSkor }} / {{ $maxSkor }} 
+                    <br>
+                    <small>
+                        Persentase: <strong>{{ $persen }}%</strong> 
+                        | Nilai: <strong>{{ $huruf }}</strong>
+                    </small>
+                </td>
+            </tr>
+            <tr>
+                <th>Rekomendasi</th>
+                <td>{{ $asesmen->rekomendasi }}</td>
+            </tr>
+        </table>
+            
+        @foreach($hasilAsesmen as $key => $hasil)
+        <h3 class="mt-3">{{ $hasil->first()->header_title }}</h3>
+        <table>
             @foreach($hasil as $item)
-                <tr>
-                    <td>{{ $item->pendaftaran->nama_lengkap }}</td>
-                    <td>{{ $item->skor }}</td>
-                    <td>{{ $item->rekomendasi }}</td>
-                    <td>{{ $item->hasil_asesmen }}</td>
-                </tr>
+            @if($item->question_type == 1)
+            <tr>
+                <td style="width: 80%;">{{ $item->formAsesmen->question }}</td>
+                <td>Skor {{ $item->jawaban }}</td>
+            </tr>
+            @else
+              <tr>
+                <td>
+                    {{ $item->jawaban }}
+                </td>
+            </tr>
+            @endif
             @endforeach
-        </tbody>
-    </table>
+        </table>    
+        @endforeach
+
 </body>
 </html>

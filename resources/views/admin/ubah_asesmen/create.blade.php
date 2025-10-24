@@ -37,6 +37,14 @@
             </select>
         </div>
 
+        <div>   
+            {{-- Urutan Tampilan --}}
+            <div class="mb-3">
+                <label for="order" class="form-label">Urutan Tampilan</label>
+                <input type="number" name="order" id="order" class="form-control" placeholder="Masukkan urutan tampilan (angka lebih kecil tampil lebih awal)" required>
+            </div>
+        </div>
+
         <button type="submit" class="btn btn-primary">💾 Simpan Pertanyaan</button>
     </form>
 </div>
