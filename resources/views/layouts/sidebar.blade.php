@@ -30,6 +30,7 @@
               data-accordion="false"
               id="navigation"
             >
+            @if(auth()->user()->role === 'staff')
               <li class="nav-item">
                 <a href="{{ route('admin.dashboard') }}" class="nav-link">
                   <i class="nav-icon bi bi-house"></i>
@@ -72,6 +73,60 @@
                   <p>Ubah Form Asesmen</p>
                 </a>
               </li>
+            @endif
+            @if(auth()->user()->role === 'pendaftar')
+             <li class="nav-item">
+                <a href="{{ route('dashboard.pendaftar') }}" class="nav-link">
+                  <i class="nav-icon bi bi-house"></i>
+                  <p>Dashboard</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ route('daftar') }}" class="nav-link">
+                  <i class="nav-icon bi bi-file-earmark-text"></i>
+                  <p>Formulir Pendaftaran</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ route('pendaftaran.edit') }}" class="nav-link">
+                  <i class="nav-icon bi bi-house"></i>
+                  <p>Lihat Pendaftaran Saya</p>
+                </a>
+              </li>
+                <li class="nav-item">
+                <a href="{{ route('prosedur') }}" class="nav-link">
+                  <i class="nav-icon bi bi-house"></i>
+                  <p>Prosedur Pendaftaran</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ route('jadwal') }}" class="nav-link">
+                  <i class="nav-icon bi bi-house"></i>
+                  <p>Jadwal Asesmen</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ route('hasil') }}" class="nav-link">
+                  <i class="nav-icon bi bi-house"></i>
+                  <p>Hasil Asesmen</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="" class="nav-link">
+                  <i class="nav-icon bi bi-house"></i>
+                  <p>Daftar Ulang</p>
+                </a>
+              </li>
+            
+            @endif
+            @if(auth()->user()->role === 'guru')
+            <li class="nav-item">
+                <a href="{{ route('guru.dashboard') }}" class="nav-link">
+                  <i class="nav-icon bi bi-house"></i>
+                  <p>Dashboard</p>
+                </a>
+              </li>
+            @endif
             </ul>
             <!--end::Sidebar Menu-->
           </nav>

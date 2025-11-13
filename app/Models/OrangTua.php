@@ -13,18 +13,9 @@ class OrangTua extends Model
 
     protected $fillable = [
         'pendaftaran_id',
-
-        // Ayah
-        'nama_ayah', 'umur_ayah', 'agama_ayah', 'status_ayah',
-        'pendidikan_ayah', 'pekerjaan_ayah', 'alamat_ayah',
-
-        // Ibu
-        'nama_ibu', 'umur_ibu', 'agama_ibu', 'status_ibu',
-        'pendidikan_ibu', 'pekerjaan_ibu', 'alamat_ibu',
-
-        // Wali
-        'nama_wali', 'umur_wali', 'agama_wali', 'status_perkawinan_wali',
-        'pendidikan_wali', 'pekerjaan_wali', 'alamat_wali', 'hubungan_wali',
+        'nama_ayah','nama_ibu','alamat_ortu','no_ortu','pekerjaan_ayah','pekerjaan_ibu','pendidikan_ayah','pendidikan_ibu',
+        'penghasilan_ayah','penghasilan_ibu',
+        'nama_wali', 'alamat_wali', 'no_wali','pendidikan_wali', 'pekerjaan_wali', 'penghasilan_wali',
     ];
 
     public function pendaftaran()
