@@ -15,14 +15,20 @@ class ProsedurController extends Controller
 
     public function adminIndex()
     {
-        $prosedur = ProsedurPendaftaran::all();
+        $prosedur = ProsedurPendaftaran::orderBy('id', 'desc')->take(1)->get();
         return view('admin.prosedur.index', compact('prosedur'));
     }
 
     public function store(Request $request)
     {
-        $request->validate(['deskripsi' => 'required|string']);
-        ProsedurPendaftaran::create(['deskripsi' => $request->deskripsi]);
+        $prosedur = new ProsedurPendaftaran();
+        $prosedur->deskripsi = 'Panduan Pendaftaran';
+        if ($request->hasFile('file_panduan')) {
+            $path = $request->file('file_panduan')->store('uploads/prosedur', 'public_html');
+            $prosedur->file_path = $path;
+        }
+        $prosedur->save(); 
+        
         return back()->with('success', 'Prosedur berhasil ditambahkan.');
     }
 

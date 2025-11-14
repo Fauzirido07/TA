@@ -159,13 +159,16 @@ class PendaftaranController extends Controller
 
     public function cetak()
     {
-        $pendaftaran = Pendaftaran::where('user_id', auth()->id())->first();
+        $pendaftaran = Pendaftaran::where('user_id', auth()->id())->orderByDesc('id')->first();
 
         if (!$pendaftaran) {
             return redirect()->route('daftar')->with('info', 'Anda belum mengisi pendaftaran.');
         }
 
-        $pdf = Pdf::loadView('pendaftar.pendaftaran_pdf', compact('pendaftaran'));
+        $orangtua = $pendaftaran->orangTua;
+
+        $pdf = Pdf::loadView('pendaftar.pendaftaran_pdf', compact('pendaftaran','orangtua'));
         return $pdf->download('formulir-pendaftaran-' . $pendaftaran->nama_lengkap . '.pdf');
+        // return $pdf->stream('formulir-pendaftaran-' . $pendaftaran->nama_lengkap . '.pdf');
     }
 }

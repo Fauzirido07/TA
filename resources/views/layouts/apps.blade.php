@@ -32,6 +32,56 @@
                 </div>
             </div>
         </main>
+        
+        <div class="toast-container position-fixed bottom-0 end-0 p-3">
+            <div
+                id="toastSuccess"
+                class="toast toast-success"
+                role="alert"
+                aria-live="assertive"
+                aria-atomic="true"
+                >
+                <div class="toast-header">
+                <i class="bi bi-circle me-2"></i>
+                <strong class="me-auto">Success</strong>
+                    <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="toast"
+                    aria-label="Close"
+                ></button>
+                </div>
+                <div class="toast-body">
+                    @if(session('success'))
+                        {{ session('success') }}
+                    @endif
+                </div>
+            </div>
+             <div
+                id="toastDanger"
+                class="toast toast-danger"
+                role="alert"
+                aria-live="assertive"
+                aria-atomic="true"
+                >
+                <div class="toast-header">
+                    <i class="bi bi-circle me-2"></i>
+                    <strong class="me-auto">Eror</strong>
+                    <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="toast"
+                        aria-label="Close"
+                        ></button>
+                    </div>
+                <div class="toast-body">
+                @if(session('error'))
+                    {{ session('error') }}
+                @endif    
+                </div>
+            </div>
+        </div>
+
     </div>
 
 
