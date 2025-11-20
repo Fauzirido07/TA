@@ -1,17 +1,9 @@
-@extends('layouts.app')
+@extends('layouts.apps')
 
 @section('title', 'Detail Asesmen')
 
 @section('content')
 <div class="container" style="max-width: 900px; margin: 30px auto;">
-
-    <div class="mt-4">
-        <a href="{{ route('dashboard.pendaftar') }}" class="btn btn-outline-dark mb-4">
-            ⬅ Kembali ke Daftar Asesmen
-        </a>
-    </div>
-
-    <h2 class="mb-4 text-center">🔍 Detail Asesmen</h2>
 
     @php
 

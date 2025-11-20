@@ -88,17 +88,17 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="{{ route('pendaftaran.edit') }}" class="nav-link">
+                <a href="{{ route('pendaftaran.saya') }}" class="nav-link">
                   <i class="nav-icon bi bi-house"></i>
                   <p>Lihat Pendaftaran Saya</p>
                 </a>
               </li>
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                 <a href="{{ route('prosedur') }}" class="nav-link">
                   <i class="nav-icon bi bi-house"></i>
                   <p>Prosedur Pendaftaran</p>
                 </a>
-              </li>
+              </li> -->
               <li class="nav-item">
                 <a href="{{ route('jadwal') }}" class="nav-link">
                   <i class="nav-icon bi bi-house"></i>

@@ -15,7 +15,7 @@ class PendaftarController extends Controller
     public function dashboard()
 {
     $user = auth()->user();
-    $pendaftaran = \App\Models\Pendaftaran::where('user_id', $user->id)->first();
+    $pendaftaran = \App\Models\Pendaftaran::where('user_id', $user->id)->orderByDesc('id')->first();
     $asesmen = null;
     $jadwal = [];
 
@@ -25,6 +25,7 @@ class PendaftarController extends Controller
     }
 
     $prosedur = \App\Models\ProsedurPendaftaran::all();
+    // dd($pendaftaran);
 
     return view('dashboard', compact('pendaftaran', 'asesmen', 'jadwal', 'prosedur'));
 }

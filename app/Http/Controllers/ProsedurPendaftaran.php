@@ -8,7 +8,8 @@ use Illuminate\Http\Request;
 class ProsedurController extends Controller
 {
     public function index() {
-        $prosedur = ProsedurPendaftaran::all();
+        $prosedur = ProsedurPendaftaran::orderBy('id', 'desc')->first();
+        dd($prosedur);
         return view('prosedur', compact('prosedur'));
     }
 

@@ -3,6 +3,15 @@
 @section('title', 'Data Pendaftaran Saya')
 
 @section('content')
+
+@if(!$pendaftaran)
+    <div class="alert alert-info">
+        <h5><i class="icon fas fa-info"></i> Informasi!</h5>
+         Anda belum mengisi formulir pendaftaran. Silahkan mendaftar melalui menu <b>Formulir Pendaftaran</b>
+        <br>Terima Kasih.
+    </div>
+@else
+
 <div class="row justify-content-center mt-4">
     <div class="col-md-8">
 
@@ -76,6 +85,10 @@
             <tr>
                 <th>Alasan</th>
                 <td>{{ ($pendaftaran->alasan) }}</span></td>
+            </tr>
+            <tr>
+                <th>Jenjang Sekolah</th>
+                <td>{{ ($pendaftaran->JenjangSekolah->jenjang) }}</span></td>
             </tr>
         </tbody>
     </table>
@@ -172,4 +185,5 @@
 
     </div>
 </div>
+@endif
 @endsection

@@ -9,6 +9,7 @@
                 <i class="bi bi-list"></i>
               </a>
             </li>
+            <li class="nav-item d-none d-md-block"><a href="{{ route('prosedur') }}" class="nav-link">Prosedur Pendaftaran</a></li>
           </ul>
           <!--end::Start Navbar Links-->
           <!--begin::End Navbar Links-->

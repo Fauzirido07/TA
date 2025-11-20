@@ -1,15 +1,9 @@
-@extends('layouts.app')
-
+@extends('layouts.apps')
+@section('title', 'Jadwal Asesmen Anda')
 @section('content')
-<div class="container" style="max-width: 750px; margin: 30px auto;">
+<div class="row">
+    <div class="col-md-12">
 
-    <div class="mt-4">
-        <a href="{{ route('dashboard.pendaftar') }}" class="btn btn-outline-dark mb-4">
-            ⬅ Kembali ke Dashboard
-        </a>
-    </div>
-
-    <h2 class="mb-4 text-center">🗓 Jadwal Asesmen Anda</h2>
 
     @if($jadwal->isEmpty())
         <div class="alert alert-warning text-center shadow-sm">
@@ -39,6 +33,6 @@
             </table>
         </div>
     @endif
-
+    </div>
 </div>
 @endsection

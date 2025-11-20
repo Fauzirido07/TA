@@ -130,6 +130,17 @@
                     </div>
                     <div class="col-md-12">
                         <div class="form-group mt-3">
+                            <label>Jenjang Sekolah</label>
+                            <select class="form-control" name="jenjang_sekolah_id" required>
+                                <option value="">-- Pilih Jenjang --</option>
+                                @foreach($jenjang as $item)
+                                <option value="{{ $item->id }}">{{ $item->jenjang }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group mt-3">
                             <label>Upload Foto 3x4</label>
                             <input type="file" class="form-control" name="foto" placeholder="Upload Foto 3x4 disini" required>
                         </div>

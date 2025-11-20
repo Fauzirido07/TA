@@ -9,7 +9,7 @@ class ProsedurController extends Controller
 {
     public function showForPendaftar()
     {
-        $prosedur = ProsedurPendaftaran::all();
+        $prosedur = ProsedurPendaftaran::orderBy('id', 'desc')->first();
         return view('prosedur', compact('prosedur'));
     }
 

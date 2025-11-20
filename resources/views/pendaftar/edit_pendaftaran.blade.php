@@ -4,6 +4,14 @@
 
 @section('content')
 
+@if(!$pendaftaran)
+    <div class="alert alert-info">
+        <h5><i class="icon fas fa-info"></i> Informasi!</h5>
+         Anda belum mengisi formulir pendaftaran. Silahkan mendaftar melalui menu <b>Formulir Pendaftaran</b>
+        <br>Terima Kasih.
+    </div>
+@else
+
 <div class="row">
     <div class="col-md-12 ">
         <form action="{{route('pendaftaran.update')}}" method="post" enctype="multipart/form-data" onsubmit="return confirm('Yakin data sudah benar?')">
@@ -119,6 +127,17 @@
                         <div class="form-group mt-3">
                             <label>Alasan</label>
                             <input type="text" class="form-control" name="alasan" value="{{$pendaftaran->alasan}}" placeholder="Masukkan Alasan Kepindahannya    " required>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group mt-3">
+                            <label>Jenjang Sekolah</label>
+                            <select class="form-control" name="jenjang_sekolah_id" required>
+                                <option value="">-- Pilih Jenjang --</option>
+                                @foreach($jenjang as $item)
+                                <option value="{{ $item->id }}" @if($pendaftaran->jenjang_sekolah_id == $item->id) selected @endif>{{ $item->jenjang }}</option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
                     <div class="col-md-12">
@@ -270,5 +289,5 @@
         </form>
     </div>
 </div>
-
+@endif
 @endsection

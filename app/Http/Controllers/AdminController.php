@@ -12,7 +12,39 @@ class AdminController extends Controller
 {
     public function dashboard()
     {
-        return view('admin.dashboard_new');
+        $pendaftarCounts = [
+            'tk' => pendaftaran::where('jenjang_sekolah_id', 1)->count(),
+            'sd' => pendaftaran::where('jenjang_sekolah_id', 2)->count(),
+            'smp' => pendaftaran::where('jenjang_sekolah_id', 3)->count(),
+            'sma' => pendaftaran::where('jenjang_sekolah_id', 4)->count(),
+            'total' => pendaftaran::count(),
+        ];
+        $administrasiCounts = [
+            'sudah' => pendaftaran::whereIn('status',['diproses', 'diterima', 'ditolak'])->count(),
+            'belum' => pendaftaran::where('status', 'pending')->count(),
+        ];
+        $belumAsesmenCounts = [
+            'tk' => Pendaftaran::where('jenjang_sekolah_id', 1)
+                        ->whereDoesntHave('asesmen')
+                        ->count(),
+            'sd' => Pendaftaran::where('jenjang_sekolah_id', 2)
+                        ->whereDoesntHave('asesmen')
+                        ->count(),
+            'smp' => Pendaftaran::where('jenjang_sekolah_id', 3)
+                        ->whereDoesntHave('asesmen')
+                        ->count(),
+            'sma' => Pendaftaran::where('jenjang_sekolah_id', 4)
+                        ->whereDoesntHave('asesmen')
+                        ->count(),
+            'total' => Pendaftaran::count(),
+        ];
+        $daftarUlangCounts = [
+            'tk' => 4,
+            'sd' => 10,
+            'smp' => 7,
+            'sma' => 5,
+        ];
+        return view('admin.dashboard_new', compact('pendaftarCounts', 'administrasiCounts', 'daftarUlangCounts', 'belumAsesmenCounts'));
     }
 
     public function users()
@@ -90,13 +122,6 @@ class AdminController extends Controller
         foreach ($statuses as $status) {
             $counts[$status] = $dataStatus[$status] ?? 0;
         }
-
-        // Untuk bar chart gender
-        $sudahAsesmenL = $pendaftar->where('jenis_kelamin', 'L')->filter(fn($i) => $i->asesmen()->exists())->count();
-        $sudahAsesmenP = $pendaftar->where('jenis_kelamin', 'P')->filter(fn($i) => $i->asesmen()->exists())->count();
-        $belumAsesmenL = $pendaftar->where('jenis_kelamin', 'L')->filter(fn($i) => !$i->asesmen()->exists())->count();
-        $belumAsesmenP = $pendaftar->where('jenis_kelamin', 'P')->filter(fn($i) => !$i->asesmen()->exists())->count();
-
         return view('admin.chart', compact('sudahAsesmenL', 'sudahAsesmenP', 'belumAsesmenL', 'belumAsesmenP', 'total_sudah', 'total_belum', 'counts'));
     }
 

@@ -9,7 +9,53 @@
         table { width: 100%; border-collapse: collapse; margin-top: 10px; }
         th, td { border: 1px solid #000; padding: 5px; }
         th { background-color: #ddd; }
+        .bordered th, .bordered td {
+            border: 1px solid #333;
+        }
+        .center {
+            text-align: center;
+        }
+        .kop-title {
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .kop-sub {
+            font-size: 14px;
+        }
+        .garis-tebal {
+            border-bottom: 3px solid #000;
+            margin-top: 4px;
+            margin-bottom: 15px;
+        }
+        .foto {
+            width: 110px;
+            height: 140px;
+            object-fit: cover;
+            border: 1px solid #333;
+        }
     </style>
+</head>
+<body>
+
+{{-- KOP SEKOLAH --}}
+<table>
+    <tr>
+        <td width="15%" class="center">
+            <img
+                src="{{ public_path('assets/images/logo.png') }}"
+                alt="Logo"
+                style="width: 90px;"
+            />
+        </td>
+        <td class="center">
+            <div class="kop-title">SEKOLAH LUAR BIASA (SLB-B)</div>
+            <div class="kop-title">DHARMA WANITA SIDOARJO</div>
+            <div class="kop-sub">Jl. Raya Sidoarjo No. xx, Kabupaten Sidoarjo</div>
+            <div class="kop-sub">Telp: 08xx-xxxx-xxxx | Email: slbdharmawanita@gmail.com</div>
+        </td>
+    </tr>
+</table>
+<div class="garis-tebal"></div>
 </head>
 <body>
     <h2>Laporan Hasil Asesmen</h2>

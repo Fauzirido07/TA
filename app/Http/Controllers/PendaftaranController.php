@@ -8,6 +8,7 @@ use App\Models\DokumenPendaftaran;
 use App\Models\Notifikasi;
 use App\Models\Asesmen;
 use App\Models\User;
+use App\Models\JenjangSekolah;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
 
@@ -16,15 +17,16 @@ class PendaftaranController extends Controller
     public function create()
     {
         $pendaftaran = Pendaftaran::where('user_id', auth()->id())->first();
-        return view('form_pendaftaran', compact('pendaftaran'));
+        $jenjang = JenjangSekolah::all();
+
+        return view('form_pendaftaran', compact('pendaftaran', 'jenjang'));
     }
 
     public function store(Request $request)
     {
         $validated = $request->validate([
-            // Validasi data pendaftaran sesuai kebutuhan
             'nama_lengkap' => 'required|string|max:255',
-            // Tambahkan validasi lainnya sesuai dengan form pendaftaran
+            'jenjang_sekolah_id' => 'required|exists:jenjang_sekolah,id',
         ]);
 
         $validated['user_id'] = auth()->id();
@@ -45,6 +47,7 @@ class PendaftaranController extends Controller
         $pendaftaran->lama_belajar = $request['lama_belajar'];
         $pendaftaran->pindahan_dari = $request['pindahan_dari'];
         $pendaftaran->alasan = $request['alasan'];
+        $pendaftaran->jenjang_sekolah_id = $request['jenjang_sekolah_id'];
          if ($request->hasFile('foto')) {
             $path = $request->file('foto')->store('uploads/dokumen', 'public_html');
             $pendaftaran->foto = $path;
@@ -79,7 +82,8 @@ class PendaftaranController extends Controller
         $pendaftaran = Pendaftaran::where('user_id', auth()->id())->orderByDesc('id')->first();
         $orangtua = $pendaftaran->orangTua;
         if (!$pendaftaran) {
-            return redirect()->route('daftar')->with('info', 'Anda belum mengisi formulir pendaftaran.');
+            $orangtua = null;
+            // return redirect()->route('daftar')->with('info', 'Anda belum mengisi formulir pendaftaran.');
         }
 
         return view('pendaftar.pendaftaran_saya', compact('pendaftaran', 'orangtua'));
@@ -88,18 +92,24 @@ class PendaftaranController extends Controller
     public function edit()
     {
         $pendaftaran = Pendaftaran::where('user_id', auth()->id())->orderByDesc('id')->first();
-        $orangtua = $pendaftaran->orangTua;
+        
+        $jenjang = JenjangSekolah::all();
         
         if (!$pendaftaran) {
-            return redirect()->route('daftar')->with('info', 'Anda belum mengisi pendaftaran.');
-        }
-
-        $sudahDiAsesmen = Asesmen::where('pendaftaran_id', $pendaftaran->id)->exists();
-        if ($sudahDiAsesmen) {
+            $orangtua = null;
+            // return redirect()->route('daftar')->with('info', 'Anda belum mengisi pendaftaran.');
+        }else
+        {
+            $orangtua = $pendaftaran->orangTua;
+            
+            $sudahDiAsesmen = Asesmen::where('pendaftaran_id', $pendaftaran->id)->exists();
+            if ($sudahDiAsesmen) {
             return redirect()->route('pendaftaran.saya')->with('warning', 'Data tidak dapat diedit karena sudah diasesmen.');
         }
+        }
 
-        return view('pendaftar.edit_pendaftaran', compact('pendaftaran', 'orangtua'));
+
+        return view('pendaftar.edit_pendaftaran', compact('pendaftaran', 'orangtua', 'jenjang'));
     }
 
     public function update(Request $request)
@@ -131,6 +141,7 @@ class PendaftaranController extends Controller
         $pendaftaran->lama_belajar = $request['lama_belajar'];
         $pendaftaran->pindahan_dari = $request['pindahan_dari'];
         $pendaftaran->alasan = $request['alasan'];
+        $pendaftaran->jenjang_sekolah_id = $request['jenjang_sekolah_id'];
          if ($request->hasFile('foto')) {
             $path = $request->file('foto')->store('uploads/dokumen', 'public_html');
             $pendaftaran->foto = $path;

@@ -28,6 +28,7 @@ class Pendaftaran extends Model
         'lama_belajar',
         'pindahan_dari',
         'alasan',
+        'jenjang_sekolah_id',
         'foto',
     ];
 
@@ -47,9 +48,15 @@ class Pendaftaran extends Model
         return $this->hasOne(OrangTua::class);
     }
 
-        public function asesmen()
+    public function asesmen()
     {
         return $this->hasOne(Asesmen::class);
     }
+
+    public function jenjangSekolah()
+    {
+        return $this->belongsTo(JenjangSekolah::class, 'jenjang_sekolah_id');
+    }
+
 
 }

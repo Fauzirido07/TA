@@ -146,6 +146,10 @@
             <th>Alasan Pindah</th>
             <td>{{ $pendaftaran->alasan }}</td>
         </tr>
+        <tr>
+            <th>Jenjang Sekolah</th>
+            <td>{{ ($pendaftaran->JenjangSekolah->jenjang) }}</span></td>
+        </tr>
     </tbody>
 </table>
 

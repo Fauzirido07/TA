@@ -19,3 +19,4 @@
           toastBootstrapDanger.show();
           @endif
 </script>
+@stack('scripts')
