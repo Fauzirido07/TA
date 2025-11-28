@@ -63,8 +63,8 @@
         <td class="center">
             <div class="kop-title">SEKOLAH LUAR BIASA (SLB-B)</div>
             <div class="kop-title">DHARMA WANITA SIDOARJO</div>
-            <div class="kop-sub">Jl. Raya Sidoarjo No. xx, Kabupaten Sidoarjo</div>
-            <div class="kop-sub">Telp: 08xx-xxxx-xxxx | Email: slbdharmawanita@gmail.com</div>
+            <div class="kop-sub">Jl. Pahlawan GG. Pahlawan, Sidokumpul, Kec. Sidoarjo Kabupaten Sidoarjo</div>
+            <div class="kop-sub">Telp: 085731271050 | Email: slbdwsda@onklas.id</div>
         </td>
     </tr>
 </table>
@@ -242,12 +242,22 @@
 </table>
 
 
-{{-- TANDA TANGAN --}}
-<div class="ttd-area">
-    Sidoarjo, {{ now()->format('d F Y') }}<br>
-    Orang Tua/Wali<br><br><br><br><br>
-    (.......................................)
-</div>
+    {{-- TANDA TANGAN --}}
+    <table style="width: 100%; margin-top: 40px;">
+    <tr>
+        <td style="text-align: center; width: 50%;">
+            Mengetahui,<br>
+            Orang Tua / Wali Murid<br><br><br><br><br>
+            (.......................................)
+        </td>
+
+        <td style="text-align: center; width: 50%;">
+            Sidoarjo, {{ now()->format('d F Y') }}<br>
+            Koordinator PPDB<br><br><br><br><br>
+            (.......................................)
+        </td>
+    </tr>
+    </table>
 
 </body>
 </html>

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\{
     AuthController, PendaftaranController, AsesmenController, JadwalController,
     HasilController, NotifikasiController, AdminController, ProsedurController,
-    PendaftarController, LandingPageController, FormAsesmenController
+    PendaftarController, LandingPageController, FormAsesmenController, DaftarUlangController
 };
 
 // Halaman utama
@@ -128,6 +128,15 @@ Route::middleware(['auth', 'role:pendaftar'])->group(function () {
 
     // Prosedur
     Route::get('/prosedur', [ProsedurController::class, 'showForPendaftar'])->name('prosedur');
+
+    // // Daftar Ulang
+    Route::prefix('daftar-ulang')->name('daftar-ulang.')->group(function () {
+
+        Route::get('', [DaftarUlangController::class, 'index'])->name('index');
+        Route::get('/edit', [DaftarUlangController::class, 'edit'])->name('edit');
+        Route::post('/update', [DaftarUlangController::class, 'update'])->name('update');
+    
+    });
 
 });
 

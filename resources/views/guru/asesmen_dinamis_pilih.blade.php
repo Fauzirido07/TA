@@ -1,12 +1,11 @@
-@extends('layouts.app')
+@extends('layouts.apps')
+
+@section('title', 'Pilih Siswa untuk DiAsesmen')
 
 @section('content')
-<div class="container">
-    <div class="mb-3">
-        <a href="{{ route('guru.dashboard') }}" class="btn btn-outline-dark">⬅ Kembali ke Dashboard</a>
-    </div>
-
-    <h2 class="mb-4">🧠 Pilih Siswa untuk Asesmen Dinamis</h2>
+<div class="row">
+    <div class="col-md-12">
+    <div class="mb-4">
 
     <table class="table table-bordered">
         <thead class="table-light">
@@ -30,5 +29,7 @@
             @endforeach
         </tbody>
     </table>
+    </div>
+    </div>
 </div>
 @endsection

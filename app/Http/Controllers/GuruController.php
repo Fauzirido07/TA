@@ -5,12 +5,16 @@ namespace App\Http\Controllers;
 use App\Models\Asesmen;
 use App\Models\Pendaftaran;
 use App\Models\FormAsesmenHeader;
+use App\Models\JadwalAsesmen;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class GuruController extends Controller
 {
     public function dashboard()
     {
-        return view('guru.dashboard');
+        $jadwals = JadwalAsesmen::get();
+        return view('guru.dashboard' , compact('jadwals'));
     }
 
     public function pilihSiswa()
@@ -43,7 +47,7 @@ class GuruController extends Controller
         abort(403, 'Anda tidak berhak melihat asesmen ini.');
     }
 
-    $maxPerGejala = 5;
+    $maxPerGejala = 3;
     $totalSkor = $asesmen->skor ?? 0;
     $totalGejala = 0;
 

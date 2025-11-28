@@ -1,17 +1,10 @@
-@extends('layouts.app')
+@extends('layouts.apps')
 
 @section('title', 'Manajemen Pendaftar')
 
 @section('content')
-<div class="container" style="max-width: 900px; margin: 30px auto;">
-
-    <div class="mt-4 d-flex justify-content-between align-items-center mb-4">
-        <a href="{{ route('admin.dashboard') }}" class="btn btn-outline-dark">
-            ⬅ Kembali ke Dashboard
-        </a>
-    </div>
-
-    <h2 class="mb-4 text-center">📋 Manajemen Pendaftar</h2>~
+<div class="row">
+    <div class="col-md-12 mb-4 text-end">
 
     @if($pendaftar->isEmpty())
         <div class="alert alert-warning text-center shadow-sm">
@@ -62,6 +55,6 @@
             </table>
         </div>
     @endif
-
+    </div>
 </div>
 @endsection

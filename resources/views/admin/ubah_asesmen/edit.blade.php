@@ -1,12 +1,13 @@
-@extends('layouts.app')
+@extends('layouts.apps')
+
+@section('title', 'Edit Form Asesmen')
 
 @section('content')
-<div class="container" style="max-width: 700px;">
+<div class="row">
+    <div class="col-md-12">
     <div class="mb-4">
         <a href="{{ route('admin.ubah_asesmen.index') }}" class="btn btn-outline-dark">⬅ Kembali ke Ubah Form Asesmen</a>
     </div>
-
-    <h2 class="mb-4">✏️ Edit Form Asesmen</h2>
 
     @if(session('success'))
         <div class="alert alert-success">{{ session('success') }}</div>
@@ -61,5 +62,6 @@
 
         <button type="submit" class="btn btn-warning">💾 Update Pertanyaan</button>
     </form>
+    </div>
 </div>
 @endsection

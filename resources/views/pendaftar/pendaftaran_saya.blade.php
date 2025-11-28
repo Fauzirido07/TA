@@ -11,7 +11,6 @@
         <br>Terima Kasih.
     </div>
 @else
-
 <div class="row justify-content-center mt-4">
     <div class="col-md-8">
 

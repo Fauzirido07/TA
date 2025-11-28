@@ -1,13 +1,14 @@
-@extends('layouts.app')
+@extends('layouts.apps')
+
+@section('title', 'Edit Jadwal Asesmen')
 
 @section('content')
-<div class="container" style="max-width: 750px; margin: 30px auto;">
+<div class="row">
 
+    <div class="col-md-12">
     <div class="mt-4">
         <a href="{{ route('admin.jadwal') }}" class="btn btn-outline-dark mb-4">⬅ Kembali ke Manajemen Jadwal</a>
     </div>
-
-    <h2 class="mb-4 text-center fw-bold">✏️ Edit Jadwal Asesmen</h2>
 
     {{-- Tampilkan error jika ada --}}
     @if ($errors->any())
@@ -27,6 +28,11 @@
         </div>
     @endif
 
+    @php
+        $today = date('Y-m-d');
+        $minDate = ($jadwal->tanggal < $today) ? $jadwal->tanggal : $today;
+    @endphp
+
     <form method="POST" action="{{ route('admin.jadwal.update', $jadwal->id) }}">
         @csrf
 
@@ -34,7 +40,9 @@
             <label for="tanggal" class="form-label">Tanggal</label>
             <input type="date" name="tanggal" id="tanggal"
                    class="form-control @error('tanggal') is-invalid @enderror"
-                   value="{{ old('tanggal', $jadwal->tanggal) }}" required>
+                   value="{{ old('tanggal', $jadwal->tanggal) }}"
+                   min="{{ $minDate }}"
+                   required>
             @error('tanggal')
                 <div class="invalid-feedback">
                     {{ $message }}
@@ -71,5 +79,6 @@
             <a href="{{ route('admin.jadwal') }}" class="btn btn-secondary">❌ Batal</a>
         </div>
     </form>
+    </div>
 </div>
 @endsection

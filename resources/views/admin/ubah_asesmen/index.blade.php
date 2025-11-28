@@ -1,8 +1,11 @@
-@extends('layouts.app')
+@extends('layouts.apps')
+
+@section('title', 'Ubah Form Asesmen')
 
 @section('content')
-<div class="container">
-    <h2 class="mb-4">🧩 Ubah Form Asesmen</h2>
+<div class="row">
+    <div class="col-md-12">
+    <div class="mb-4">
 
     <a href="{{ route('admin.ubah_asesmen.create') }}" class="btn btn-primary mb-3">➕ Tambah Form Baru</a>
     <a href="{{ route('admin.ubah_asesmen.create_kategori') }}" class="btn btn-primary mb-3">➕ Tambah Kategori Baru</a>
@@ -65,5 +68,7 @@
             </div>
         </div>
     @endforeach
+    </div>
+</div>
 </div>
 @endsection

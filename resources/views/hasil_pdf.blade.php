@@ -50,8 +50,8 @@
         <td class="center">
             <div class="kop-title">SEKOLAH LUAR BIASA (SLB-B)</div>
             <div class="kop-title">DHARMA WANITA SIDOARJO</div>
-            <div class="kop-sub">Jl. Raya Sidoarjo No. xx, Kabupaten Sidoarjo</div>
-            <div class="kop-sub">Telp: 08xx-xxxx-xxxx | Email: slbdharmawanita@gmail.com</div>
+            <div class="kop-sub">Jl. Pahlawan GG. Pahlawan, Sidokumpul, Kec. Sidoarjo Kabupaten Sidoarjo</div>
+            <div class="kop-sub">Telp: 085731271050 | Email: slbdwsda@onklas.id</div>
         </td>
     </tr>
 </table>

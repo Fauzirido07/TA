@@ -13,7 +13,6 @@ class AdminController extends Controller
     public function dashboard()
     {
         $pendaftarCounts = [
-            'tk' => pendaftaran::where('jenjang_sekolah_id', 1)->count(),
             'sd' => pendaftaran::where('jenjang_sekolah_id', 2)->count(),
             'smp' => pendaftaran::where('jenjang_sekolah_id', 3)->count(),
             'sma' => pendaftaran::where('jenjang_sekolah_id', 4)->count(),
@@ -24,9 +23,6 @@ class AdminController extends Controller
             'belum' => pendaftaran::where('status', 'pending')->count(),
         ];
         $belumAsesmenCounts = [
-            'tk' => Pendaftaran::where('jenjang_sekolah_id', 1)
-                        ->whereDoesntHave('asesmen')
-                        ->count(),
             'sd' => Pendaftaran::where('jenjang_sekolah_id', 2)
                         ->whereDoesntHave('asesmen')
                         ->count(),
@@ -39,7 +35,6 @@ class AdminController extends Controller
             'total' => Pendaftaran::count(),
         ];
         $daftarUlangCounts = [
-            'tk' => 4,
             'sd' => 10,
             'smp' => 7,
             'sma' => 5,

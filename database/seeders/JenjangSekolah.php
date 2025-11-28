@@ -10,7 +10,6 @@ class JenjangSekolahSeeder extends Seeder
     public function run(): void
     {
         DB::table('jenjang_sekolah')->insert([
-            ['jenjang' => 'TK'],
             ['jenjang' => 'SD'],
             ['jenjang' => 'SMP'],
             ['jenjang' => 'SMA'],

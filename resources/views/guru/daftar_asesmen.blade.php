@@ -1,17 +1,11 @@
-@extends('layouts.app')
+@extends('layouts.apps')
 
-@section('title', 'Daftar Asesmen yang Sudah Diisi')
+@section('title', 'Hasil Evaluasi Asesmen')
 
 @section('content')
-<div class="container" style="max-width: 900px; margin: 30px auto;">
+<div class="row">
+    <div class="col-md-12">
 
-    <div class="mt-4">
-        <a href="{{ route('guru.dashboard') }}" class="btn btn-outline-dark mb-4">
-            ⬅ Kembali ke Dashboard
-        </a>
-    </div>
-
-    <h2 class="mb-4 text-center">📋 Daftar Asesmen yang Sudah Diisi</h2>
 
     @if($asesmen->isEmpty())
         <div class="alert alert-warning text-center shadow-sm">
@@ -47,6 +41,8 @@
             </table>
         </div>
     @endif
+
+    </div>
 
 </div>
 @endsection

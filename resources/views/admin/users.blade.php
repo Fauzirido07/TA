@@ -7,7 +7,7 @@
     <div class="col-md-12 ">
         <div class="mb-4 text-end">
                 <a href="{{ route('admin.users.create') }}" class="btn btn-primary">
-                     ➕ Tambah Guru
+                     ➕ Tambah Guru / Staff
                 </a>
 
          </div> 

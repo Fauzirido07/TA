@@ -49,6 +49,7 @@
 
     <hr>
 
+    {{-- Tentang Sekolah --}}
     <div class="row justify-content-center mt-5">
         <div class="col-md-8 col-lg-7">
             <div class="card shadow-sm p-4 bg-light rounded-4">
@@ -64,36 +65,45 @@
         </div>
     </div>
 
+    {{-- Prosedur Pendaftaran --}}
     <div class="row justify-content-center mt-5">
         <div class="col-md-8 col-lg-7">
             <div class="card shadow-sm p-4 bg-light rounded-4">
                 <h4 class="mb-3 fw-semibold text-primary">
-                    <i class="bi bi-building me-2"></i> 📌 Prosedur Pendaftaran 
+                    <i class="bi bi-list-check me-2"></i> Prosedur Pendaftaran 
                 </h4>
-                <p class="mb-3">Silakan ikuti langkah-langkah berikut untuk melakukan pendaftaran di SLB-B Dharma Wanita Sidoarjo:</p>
-                @if($prosedur->isEmpty())
-                    <div class="alert alert-warning text-center shadow-sm">
-                        <i class="bi bi-exclamation-circle-fill"></i> Belum ada prosedur yang ditambahkan.
-                    </div>
-                @else
-                    <ol class="list-group list-group-numbered mb-4">
-                        @foreach($prosedur as $p)
-                            <li class="list-group-item">{{ $p->deskripsi }}</li>
-                        @endforeach
-                    </ol>
+
+                <p class="text-secondary fs-5">
+                    Silakan ikuti langkah-langkah berikut untuk melakukan pendaftaran di SLB-B Dharma Wanita Sidoarjo:
+                </p>
+
+                <ol class="text-secondary fs-5">
+                    <li>Buat akun terlebih dahulu dengan menekan tombol <b>Daftar</b>, lalu mengisi nama, email Google, dan password.</li>
+                    <li>Setelah membuat akun, lanjutkan dengan melakukan <b>Login</b> menggunakan akun yang sudah dibuat.</li>
+                    <li>Setelah berhasil login, pengguna dapat mendaftar dengan memilih tombol <b>Formulir Pendaftaran</b> dan mengisi form.</li>
+                    <li>Jika formulir sudah lengkap, pengguna dapat mengirim form tersebut lalu melanjutkan ke proses administrasi langsung ke SLB-B Dharma Wanita Sidoarjo.</li>
+                    <li>Setelah administrasi selesai, pengguna dapat melakukan daftar ulang dengan menekan tombol <b>Daftar Ulang</b> dan mengupload dokumen yang diperlukan.</li>
+                    <li>Setelah asesmen, pengguna dapat melihat hasil asesmen melalui tombol <b>Lihat Hasil Asesmen</b> dan dapat mengunduhnya melalui tombol <b>Cetak Hasil Asesmen</b>.</li>
+                    <li>Pendaftaran selesai.</li>
+                </ol>
+
+                @if(!empty($prosedur) && !empty($prosedur->file_path))
+                    <a href="{{ asset($prosedur->file_path) }}" class="btn btn-primary mt-3" target="_blank">
+                        Lihat File Prosedur Lengkap
+                    </a>
                 @endif
+
             </div>
         </div>
     </div>
-</div>
 
+</div>
 
 @endsection
 
 @push('styles')
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet" />
 <style>
-    /* Animasi masuk halus */
     .container {
         animation: fadeInUp 0.8s ease forwards;
         opacity: 0;

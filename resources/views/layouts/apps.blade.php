@@ -33,55 +33,37 @@
             </div>
         </main>
         
-        <div class="toast-container position-fixed bottom-0 end-0 p-3">
-            <div
-                id="toastSuccess"
-                class="toast toast-success"
-                role="alert"
-                aria-live="assertive"
-                aria-atomic="true"
-                >
-                <div class="toast-header">
-                <i class="bi bi-circle me-2"></i>
-                <strong class="me-auto">Success</strong>
-                    <button
-                    type="button"
-                    class="btn-close"
-                    data-bs-dismiss="toast"
-                    aria-label="Close"
-                ></button>
-                </div>
-                <div class="toast-body">
-                    @if(session('success'))
+        <div class="position-fixed bottom-0 right-0 p-3" style="z-index: 5; right: 0; bottom: 0;">
+        <div id="successToast" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true" data-delay="2000">
+            <div class="toast-header bg-success text-white">
+            <strong class="mr-auto">Success</strong>
+            <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+            <div class="toast-body bg-success text-white">
+            @if(session('success'))
                         {{ session('success') }}
                     @endif
-                </div>
-            </div>
-             <div
-                id="toastDanger"
-                class="toast toast-danger"
-                role="alert"
-                aria-live="assertive"
-                aria-atomic="true"
-                >
-                <div class="toast-header">
-                    <i class="bi bi-circle me-2"></i>
-                    <strong class="me-auto">Eror</strong>
-                    <button
-                        type="button"
-                        class="btn-close"
-                        data-bs-dismiss="toast"
-                        aria-label="Close"
-                        ></button>
-                    </div>
-                <div class="toast-body">
-                @if(session('error'))
-                    {{ session('error') }}
-                @endif    
-                </div>
             </div>
         </div>
+        </div>
 
+        <div class="position-fixed bottom-0 right-0 p-3" style="z-index: 5; right: 0; bottom: 0;">
+        <div id="errorToast" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true" data-delay="2000">
+            <div class="toast-header bg-danger text-white">
+            <strong class="mr-auto">Error</strong>
+            <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+            <div class="toast-body bg-danger text-white">
+            @if(session('error'))
+                    {{ session('error') }}
+                @endif  
+            </div>
+        </div>
+        </div>
     </div>
 
 

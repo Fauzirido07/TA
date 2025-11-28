@@ -1,13 +1,13 @@
-@extends('layouts.app')
+@extends('layouts.apps')
+
+@section('title', 'Tambah Jadwal Asesmen')
 
 @section('content')
-<div class="container" style="max-width: 750px; margin: 30px auto;">
-
+<div class="row">
+    <div class="col-md-12">
     <div class="mt-4">
         <a href="{{ route('admin.jadwal') }}" class="btn btn-outline-dark mb-4">⬅ Kembali ke Jadwal</a>
     </div>
-
-    <h2 class="mb-4 text-center">🗓 Tambah Jadwal Asesmen</h2>
 
     {{-- Tampilkan error global --}}
     @if ($errors->any())
@@ -56,7 +56,9 @@
                     <label for="tanggal">Tanggal</label>
                     <input type="date" name="tanggal" id="tanggal"
                            class="form-control @error('tanggal') is-invalid @enderror"
-                           value="{{ old('tanggal') }}" required>
+                           value="{{ old('tanggal') }}"
+                           min="{{ date('Y-m-d') }}"
+                           required>
                     @error('tanggal')
                         <div class="invalid-feedback">
                             {{ $message }}
@@ -93,6 +95,6 @@
 
         <button type="submit" class="btn btn-success w-100">💾 Simpan Jadwal</button>
     </form>
-
+    </div>
 </div>
 @endsection

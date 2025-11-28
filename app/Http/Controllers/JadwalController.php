@@ -21,11 +21,18 @@ public function create()
 
 public function store(Request $request)
 {
-    $request->validate([
+     $request->validate([
         'pendaftaran_id' => 'required|exists:pendaftaran,id',
-        'tanggal' => 'required|date',
+        'tanggal' => 'required|date|after_or_equal:today',
         'waktu' => 'required',
         'lokasi' => 'required|string|max:255',
+    ]);
+
+    JadwalAsesmen::create([
+        'pendaftaran_id' => $request->pendaftaran_id,
+        'tanggal' => $request->tanggal,
+        'waktu' => $request->waktu,
+        'lokasi' => $request->lokasi,
     ]);
 
     $cekjadwal=JadwalAsesmen::where('tanggal', $request->tanggal)->where('waktu', $request->waktu)->count();
@@ -48,11 +55,11 @@ public function edit($id)
 public function update(Request $request, $id)
 {
     $request->validate([
-        'tanggal' => 'required|date',
-        'waktu' => 'required',
-        'lokasi' => 'required|string|max:255',
+        'tanggal' => 'required|date|after_or_equal:today',
+        'waktu'   => 'required',
+        'lokasi'  => 'required|string|max:255',
     ]);
-
+    
     $jadwal = JadwalAsesmen::findOrFail($id);
     $jadwal->update($request->all());
 

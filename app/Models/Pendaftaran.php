@@ -58,5 +58,14 @@ class Pendaftaran extends Model
         return $this->belongsTo(JenjangSekolah::class, 'jenjang_sekolah_id');
     }
 
+    public function daftarUlang()
+    {
+        return $this->hasOne(DaftarUlang::class);
+    }
+
+    public function jadwalAsesmen()
+    {
+        return $this->hasOne(JadwalAsesmen::class);
+    }
 
 }

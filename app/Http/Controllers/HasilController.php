@@ -12,14 +12,17 @@ class HasilController extends Controller
     {
         $user = auth()->user();
         $pendaftaran = Pendaftaran::where('user_id', $user->id)->first();
-
+        
         if (!$pendaftaran) {
-            return view('hasil')->with('asesmen', null);
+            return view('hasil', compact('pendaftaran'));
         }
 
         $asesmen = Asesmen::where('pendaftaran_id', $pendaftaran->id)->first();
+        if (!$asesmen) {
+            return view('hasil', compact('pendaftaran', 'asesmen'));
+        }
 
-          $maxPerGejala = 5;
+    $maxPerGejala = 3;
     $totalSkor = $asesmen->skor ?? 0;
     $totalGejala = 0;
 

@@ -80,10 +80,9 @@ class PendaftaranController extends Controller
     public function showMyData()
     {
         $pendaftaran = Pendaftaran::where('user_id', auth()->id())->orderByDesc('id')->first();
-        $orangtua = $pendaftaran->orangTua;
-        if (!$pendaftaran) {
-            $orangtua = null;
-            // return redirect()->route('daftar')->with('info', 'Anda belum mengisi formulir pendaftaran.');
+        $orangtua = null;
+        if ($pendaftaran) {
+            $orangtua = $pendaftaran->orangTua;
         }
 
         return view('pendaftar.pendaftaran_saya', compact('pendaftaran', 'orangtua'));
@@ -104,7 +103,7 @@ class PendaftaranController extends Controller
             
             $sudahDiAsesmen = Asesmen::where('pendaftaran_id', $pendaftaran->id)->exists();
             if ($sudahDiAsesmen) {
-            return redirect()->route('pendaftaran.saya')->with('warning', 'Data tidak dapat diedit karena sudah diasesmen.');
+            return redirect()->route('pendaftaran.saya')->with('error', 'Data tidak dapat diedit karena sudah diasesmen.');
         }
         }
 

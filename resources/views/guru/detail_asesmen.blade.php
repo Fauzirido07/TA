@@ -1,9 +1,10 @@
-@extends('layouts.app')
+@extends('layouts.apps')
 
-@section('title', 'Detail Asesmen')
+@section('title', 'Hasil Evaluasi Asesmen')
 
 @section('content')
-<div class="container" style="max-width: 900px; margin: 30px auto;">
+<div class="row">
+    <div class="col-md-12">
 
     <div class="mt-4">
         <a href="{{ route('guru.asesmen.daftar') }}" class="btn btn-outline-dark mb-4">
@@ -11,18 +12,21 @@
         </a>
     </div>
 
-    <h2 class="mb-4 text-center">🔍 Detail Asesmen</h2>
 
     @php
 
         if ($persen <= 50) {
             $huruf = 'D (Perlu Bimbingan)';
+            $rekomendasi = 'Turun 2 tingkat.';
         } elseif ($persen <= 65) {
             $huruf = 'C (Cukup)';
+            $rekomendasi = 'Turun 1 tingkat.';
         } elseif ($persen <= 80) {
             $huruf = 'B (Baik)';
+            $rekomendasi = 'Tetap di tingkat saat ini.';
         } else {
             $huruf = 'A (Sangat Baik)';
+            $rekomendasi = 'Tetap di tingkat saat ini.';   
         }
     @endphp
 
@@ -45,7 +49,7 @@
             </tr>
             <tr>
                 <th class="table-light">Rekomendasi</th>
-                <td>{{ $asesmen->rekomendasi }}</td>
+                <td>{{ $rekomendasi }}</td>
             </tr>
         </table>
     </div>
@@ -63,6 +67,6 @@
                 @endforeach
             </ul>
     @endforeach
-
+    </div>
 </div>
 @endsection

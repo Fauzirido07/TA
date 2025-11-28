@@ -3,7 +3,7 @@
         <!--begin::Sidebar Brand-->
         <div class="sidebar-brand">
           <!--begin::Brand Link-->
-          <a href="{{ route('admin.dashboard') }}" class="brand-link">
+          <a href="{{ route('home') }}" class="brand-link">
             <!--begin::Brand Image-->
             <img
               src="{{ asset('assets/images/logo.ico') }}"
@@ -55,12 +55,12 @@
                   <p>Kelola Prosedur Pendaftaran</p>
                 </a>
               </li>
-              <li class="nav-item">
+              <!-- <li class="nav-item">
                 <a href="{{ route('admin.chart') }}" class="nav-link">
                   <i class="nav-icon bi bi-bar-chart"></i>
                   <p>Monitoring Asesmen</p>
                 </a>
-              </li>
+              </li> -->
               <li class="nav-item">
                 <a href="{{ route('admin.pendaftar') }}" class="nav-link">
                   <i class="nav-icon bi bi-clipboard"></i>
@@ -89,7 +89,7 @@
               </li>
               <li class="nav-item">
                 <a href="{{ route('pendaftaran.saya') }}" class="nav-link">
-                  <i class="nav-icon bi bi-house"></i>
+                  <i class="nav-icon bi bi-folder2-open"></i>
                   <p>Lihat Pendaftaran Saya</p>
                 </a>
               </li>
@@ -101,19 +101,19 @@
               </li> -->
               <li class="nav-item">
                 <a href="{{ route('jadwal') }}" class="nav-link">
-                  <i class="nav-icon bi bi-house"></i>
+                  <i class="nav-icon bi bi-calendar-check"></i>
                   <p>Jadwal Asesmen</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="{{ route('hasil') }}" class="nav-link">
-                  <i class="nav-icon bi bi-house"></i>
+                  <i class="nav-icon bi bi-bar-chart-line"></i>
                   <p>Hasil Asesmen</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="" class="nav-link">
-                  <i class="nav-icon bi bi-house"></i>
+                <a href="{{ route('daftar-ulang.index') }}" class="nav-link">
+                  <i class="nav-icon bi bi-arrow-repeat"></i>
                   <p>Daftar Ulang</p>
                 </a>
               </li>
@@ -126,6 +126,18 @@
                   <p>Dashboard</p>
                 </a>
               </li>
+              <li class="nav-item">
+                <a href="{{ route('guru.asesmen_dinamis.pilih') }}" class="nav-link">
+                  <i class="nav-icon bi bi-puzzle"></i>
+                  <p>Asesmen</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ route('guru.asesmen.daftar') }}" class="nav-link">
+                  <i class="nav-icon bi bi-clipboard-check"></i>
+                  <p>Hasil Evaluasi Asesmen</p>
+                </a>
+              </li> 
             @endif
             </ul>
             <!--end::Sidebar Menu-->
