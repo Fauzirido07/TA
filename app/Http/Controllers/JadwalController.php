@@ -22,8 +22,8 @@ public function create()
 public function store(Request $request)
 {
     $request->validate([
-        'pendaftaran_id' => 'required|exists:pendaftaran,id',
-        'tanggal' => 'required|date|after_or_equal:today',
+        'pendaftaran_id' => 'required|exists:pendaftaran,id|',
+        'tanggal' => 'required|date|after_or_equal:today|before_or_equal:2026-12-31',
         'waktu' => 'required|string|max:50',
         'lokasi' => 'required|string|max:255',
     ]);
@@ -56,7 +56,7 @@ public function edit($id)
 public function update(Request $request, $id)
 {
     $request->validate([
-        'tanggal' => 'required|date|after_or_equal:today',
+        'tanggal' => 'required|date|after_or_equal:today|before_or_equal:2026-12-31',
         'waktu'   => 'required|string|max:50',
         'lokasi'  => 'required|string|max:255',
     ]);
