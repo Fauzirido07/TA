@@ -128,7 +128,7 @@ class AuthController extends Controller
         'email' => 'required|email|unique:users,email,' . $user->id,
         'password_lama' => 'nullable|string|min:6', 
         'password' => 'nullable|confirmed',
-        'foto' => 'nullable|image|max:2048'
+        'foto' => 'nullable|image|max:10240'
     ], [
         'nama.unique' => 'Nama sudah digunakan pengguna lain.',
         'email.unique' => 'Email sudah digunakan pengguna lain.'
