@@ -21,12 +21,20 @@ public function create()
 
 public function store(Request $request)
 {
-     $request->validate([
+    $request->validate([
         'pendaftaran_id' => 'required|exists:pendaftaran,id',
         'tanggal' => 'required|date|after_or_equal:today',
         'waktu' => 'required',
         'lokasi' => 'required|string|max:255',
     ]);
+
+    $cekjadwal = JadwalAsesmen::where('tanggal', $request->tanggal)
+        ->where('waktu', $request->waktu)
+        ->count();
+
+    if($cekjadwal > 0){
+        return redirect()->route('admin.jadwal')->with('error', 'Jadwal dengan tanggal dan waktu ini sudah ada.');
+    }
 
     JadwalAsesmen::create([
         'pendaftaran_id' => $request->pendaftaran_id,
@@ -35,16 +43,9 @@ public function store(Request $request)
         'lokasi' => $request->lokasi,
     ]);
 
-    $cekjadwal=JadwalAsesmen::where('tanggal', $request->tanggal)->where('waktu', $request->waktu)->count();
-    if($cekjadwal>0){
-        return redirect()->route('admin.jadwal')->with('error', 'Jadwal Gagal Ditambahkan.');
-    }else{
-    \App\Models\JadwalAsesmen::create($request->all());
-
     return redirect()->route('admin.jadwal')->with('success', 'Jadwal berhasil ditambahkan.');
-    }
-
 }
+
 
 public function edit($id)
 {

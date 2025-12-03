@@ -26,7 +26,7 @@
                 <div class="row">
                     <div class="col-md-12">
                                 <div class="table-responsive shadow-sm">
-            <table class="table table-bordered table-hover align-middle">
+            <table class="table table-bordered table-hover align-middle dataTable">
                 <thead class="table-light text-center">
                     <tr>
                         <th style="width: 25%;">Nama</th>

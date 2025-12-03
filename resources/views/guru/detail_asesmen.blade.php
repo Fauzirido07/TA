@@ -56,17 +56,28 @@
 
     <h4 class="mt-4">📌 Jawaban Detail</h4>
 
-    @foreach($hasilAsesmen as $key => $hasil)
+        @foreach($hasilAsesmen as $key => $hasil)
         <h5 class="mt-3">{{ $hasil->first()->header_title }}</h5>
-            <ul class="list-group mb-3 shadow-sm">
-                @foreach($hasil->sortBy('order') as $item)
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                       {{ $item->formAsesmen->question }}
-                        <span class="badge bg-primary rounded-pill">Skor {{ $item->jawaban }}</span>
-                    </li>
-                @endforeach
-            </ul>
+        <ul class="list-group mb-3 shadow-sm">
+            @foreach($hasil->sortBy('order') as $item)
+                <li class="list-group-item">
+                    <strong>{{ $item->formAsesmen->question }}</strong>
+
+                    @if($item->formAsesmen->question_type == 1)
+                        <span class="badge bg-primary rounded-pill float-end">
+                            Skor {{ $item->jawaban }}
+                        </span>
+
+                    @elseif($item->formAsesmen->question_type == 2)
+                        <div class="mt-2 p-2 bg-light rounded border">
+                            {{ $item->jawaban }}
+                        </div>
+                    @endif
+                </li>
+            @endforeach
+        </ul>
     @endforeach
+
     </div>
 </div>
 @endsection

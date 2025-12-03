@@ -4,12 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Asesmen extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
-    // Tentukan nama tabel jika berbeda dengan nama default (plural)
     protected $table = 'asesmen';
 
     protected $fillable = ['pendaftaran_id', 'guru_id', 'hasil_asesmen', 'rekomendasi', 'skor'];
@@ -22,10 +22,5 @@ class Asesmen extends Model
     public function guru()
     {
         return $this->belongsTo(User::class, 'guru_id');
-    }
-
-    public function evaluasi()
-    {
-        return $this->hasOne(Evaluasi::class);
     }
 }

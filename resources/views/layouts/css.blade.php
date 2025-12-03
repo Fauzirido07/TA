@@ -14,3 +14,4 @@
       crossorigin="anonymous"
     />
 <link rel="stylesheet" href="{{ asset('assets/css/adminlte.css') }}" />
+<link href="https://cdn.datatables.net/v/dt/dt-2.3.5/datatables.min.css" rel="stylesheet" integrity="sha384-Lv8lYSJkh1Hc5kB9lk2YbbGdchMRCuAcwUOYWZ3Q/YIfKNVW+6W+V57wxKNv1D8l" crossorigin="anonymous">

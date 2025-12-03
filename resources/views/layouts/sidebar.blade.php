@@ -64,7 +64,7 @@
               <li class="nav-item">
                 <a href="{{ route('admin.pendaftar') }}" class="nav-link">
                   <i class="nav-icon bi bi-clipboard"></i>
-                  <p>Manajemen Pendaftar</p>
+                  <p>Manajemen Status Pendaftar</p>
                 </a>
               </li>
               <li class="nav-item">

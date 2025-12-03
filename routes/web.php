@@ -4,7 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\{
     AuthController, PendaftaranController, AsesmenController, JadwalController,
     HasilController, NotifikasiController, AdminController, ProsedurController,
-    PendaftarController, LandingPageController, FormAsesmenController, DaftarUlangController
+    PendaftarController, LandingPageController, FormAsesmenController, DaftarUlangController, 
+    ForgotPasswordController, ResetPasswordController
 };
 
 // Halaman utama
@@ -18,6 +19,15 @@ Route::view('/register', 'daftar')->name('register');
 Route::post('/register', [AuthController::class, 'register'])->name('register.post');
 
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
+Route::get('/profile/edit', [AuthController::class, 'editProfile'])->name('profile.edit');
+Route::post('/profile/update', [AuthController::class, 'updateProfile'])->name('profile.update');
+
+Route::get('/forgot-password', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
+Route::post('/forgot-password', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
+
+Route::get('/reset-password/{token}', [ResetPasswordController::class, 'showResetForm'])->name('password.reset');
+Route::post('/reset-password', [ResetPasswordController::class, 'reset'])->name('password.update');
 
 
 // ===================================================
@@ -63,6 +73,7 @@ Route::middleware(['auth', 'role:staff'])->group(function () {
     // Kelola Pendaftar
     Route::get('/admin/pendaftar', [AdminController::class, 'pendaftar'])->name('admin.pendaftar');
     Route::post('/admin/pendaftar/{id}/status', [AdminController::class, 'updatePendaftaranStatus'])->name('admin.pendaftar.updateStatus');
+    Route::delete('/admin/pendaftar/{id}/destroy', [AdminController::class, 'destroyPendaftar'])->name('admin.pendaftar.destroy');
 
     // Ubah Form Asesmen
     Route::get('/ubah-asesmen', [FormAsesmenController::class, 'index'])->name('admin.ubah_asesmen.index');
@@ -73,6 +84,9 @@ Route::middleware(['auth', 'role:staff'])->group(function () {
     Route::delete('/ubah-asesmen/{id}', [FormAsesmenController::class, 'destroy'])->name('admin.ubah_asesmen.destroy');
     Route::get('/ubah-asesmen/create-kategori', [FormAsesmenController::class, 'createHeader'])->name('admin.ubah_asesmen.create_kategori');
     Route::post('/ubah-asesmen/store-kategori', [FormAsesmenController::class, 'storeHeader'])->name('admin.ubah_asesmen.store_kategori');
+    Route::delete('/ubah-asesmen-kategori/{id}', [FormAsesmenController::class, 'destroyKategori'])->name('admin.ubah_asesmen.destroy_kategori');
+    Route::get('/ubah-asesmen-kategori/edit/{id}', [FormAsesmenController::class, 'editKategori'])->name('admin.ubah_asesmen.edit_kategori');
+    Route::post('/ubah-asesmen-kategori/update/{id}', [FormAsesmenController::class, 'updateKategori'])->name('admin.ubah_asesmen.update_kategori');
 });
 
 
@@ -123,11 +137,8 @@ Route::middleware(['auth', 'role:pendaftar'])->group(function () {
     Route::get('/hasil', [HasilController::class, 'index'])->name('hasil');
     Route::get('/hasil/pdf', [HasilController::class, 'exportPdf'])->name('hasil.pdf');
 
-    // Notifikasi
-    Route::get('/notifikasi', [NotifikasiController::class, 'index'])->name('notifikasi');
-
     // Prosedur
-    Route::get('/prosedur', [ProsedurController::class, 'showForPendaftar'])->name('prosedur');
+   
 
     // // Daftar Ulang
     Route::prefix('daftar-ulang')->name('daftar-ulang.')->group(function () {
@@ -140,5 +151,6 @@ Route::middleware(['auth', 'role:pendaftar'])->group(function () {
 
 });
 
-// ================== Laporan (opsional) =============
-Route::get('/laporan', [HasilController::class, 'cetakLaporan'])->name('laporan');
+route::middleware('auth')->group(function () {
+     Route::get('/prosedur', [ProsedurController::class, 'showForPendaftar'])->name('prosedur');
+}); 

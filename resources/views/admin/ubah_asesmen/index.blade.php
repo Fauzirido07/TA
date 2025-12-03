@@ -11,12 +11,22 @@
     <a href="{{ route('admin.ubah_asesmen.create_kategori') }}" class="btn btn-primary mb-3">➕ Tambah Kategori Baru</a>
     @foreach($headers->sortBy('order') as $header)
         <div class="card mb-3">
-            <div class="card-header d-flex justify-content-between align-items-center">
+            <div class="card-header d-flex">
                 <strong>{{ $header->title }}</strong>
+                {{-- Tombol Hapus --}}
+                <div class="ml-auto">
+                <a href="{{ route('admin.ubah_asesmen.edit_kategori', $header->id) }}" class="btn btn-sm btn-primary">✏️ Edit</a>
+                <form action="{{ route('admin.ubah_asesmen.destroy_kategori', $header->id) }}" method="POST" 
+                    onsubmit="return confirm('Yakin ingin menghapus kategori ini?')" class="d-inline">
+                    @csrf
+                     @method('DELETE')
+                    <button class="btn btn-sm btn-danger">🗑 Hapus</button>
+                 </form>
+                </div>
             </div>
 
             <div class="card-body">
-                <table class="table table-bordered mb-3 align-middle">
+                <table class="table table-bordered mb-3 align-middle dataTable">
                     <thead class="table-light text-center">
                         <tr>
                             <th style="width: 60px;">No</th>
@@ -27,7 +37,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @forelse($header->formAsesmen->sortBy('order') as $index => $form)
+                        @foreach($header->formAsesmen->sortBy('order') as $index => $form)
                             <tr>
                                 <td class="text-center">{{ $index + 1 }}</td>
                                 <td>{{ $form->question }}</td>
@@ -44,7 +54,7 @@
                                 <td class="text-center">
                                     <div class="d-flex justify-content-center gap-2">
                                         {{-- Tombol Edit --}}
-                                        <a href="{{ route('admin.ubah_asesmen.edit', $form->id) }}" class="btn btn-sm btn-warning">
+                                        <a href="{{ route('admin.ubah_asesmen.edit', $form->id) }}" class="btn btn-sm btn-primary">
                                             ✏️ Edit
                                         </a>
 
@@ -58,11 +68,7 @@
                                     </div>
                                 </td>
                             </tr>
-                        @empty
-                            <tr>
-                                <td colspan="4" class="text-center text-muted">Belum ada pertanyaan pada kategori ini.</td>
-                            </tr>
-                        @endforelse
+                        @endforeach
                     </tbody>
                 </table>
             </div>

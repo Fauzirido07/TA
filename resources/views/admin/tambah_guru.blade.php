@@ -1,12 +1,12 @@
 @extends('layouts.apps')
 
-@section('title', 'Tambah Guru / Staff')
+@section('title', 'Tambah Guru / Staf')
 
 @section('content')
 <div class="row">
     <div class="col-md-12">
         <div class="mb-4">
-        <a href="{{ route('admin.users') }}" class="btn btn-outline-dark">⬅ Kembali ke Manajemen Guru & Staff</a>
+        <a href="{{ route('admin.users') }}" class="btn btn-outline-dark">⬅ Kembali ke Manajemen Guru & Staf</a>
         </div>
 
         <div class="card card-outline card-success">
@@ -37,26 +37,39 @@
                         </div>
 
                         <div class="mb-3">
-                        <label for="email" class="form-label">Email</label>
-                        <input type="email" id="email" name="email"
-                        class="form-control @error('email') is-invalid @enderror"
-                        value="{{ old('email') }}" required>
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" id="email" name="email"
+                                class="form-control @error('email') is-invalid @enderror"
+                                value="{{ old('email') }}" required>
                         @error('email')
-                        <div class="invalid-feedback">{{ $message }}</div>
+                            <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                         </div>
 
                         <div class="mb-3">
-                        <label for="password" class="form-label">Password</label>
-                        <input type="password" id="password" name="password"
-                        class="form-control @error('password') is-invalid @enderror"
-                        required>
-                        @error('password')
-                        <div class="invalid-feedback">{{ $message }}</div>
+                            <label for="password" class="form-label">Password</label>
+                            <input type="password" id="password" name="password"
+                                class="form-control @error('password') is-invalid @enderror"
+                                required>
+                            @error('password')
+                            <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
-                    </div>
+                        </div>
 
-                    <button class="btn btn-primary">Tambah Guru</button>
+                        <div class="mb-3">
+                            <label for="role" class="form-label">Role</label>
+                            <select id="role" name="role"
+                                class="form-select @error('role') is-invalid @enderror" required>
+                                <option value="">-- Pilih Role --</option>
+                                <option value="guru" {{ old('role') == 'guru' ? 'selected' : '' }}>Guru</option>
+                                <option value="staff" {{ old('role') == 'staff' ? 'selected' : '' }}>Staff</option>
+                            </select>
+                            @error('role')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                        </div>
+
+                    <button class="btn btn-primary">Tambah Guru/Staf</button>
                     </form>
                     </div>
                 </div>

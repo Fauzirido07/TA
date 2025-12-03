@@ -3,7 +3,7 @@
 @section('content')
 <div class="container d-flex justify-content-center align-items-center" style="min-height: 90vh;">
     <div class="card shadow-sm p-4" style="width: 100%; max-width: 450px;">
-        <h3 class="text-center mb-4">Formulir Pendaftaran Akun</h3>
+        <h3 class="text-center mb-4">Daftar Akun</h3>
 
         @if($errors->any())
             <div class="alert alert-danger">

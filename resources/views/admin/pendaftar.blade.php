@@ -12,22 +12,22 @@
         </div>
     @else
         <div class="table-responsive shadow-sm">
-            <table class="table table-bordered table-hover align-middle">
+            <table class="table table-bordered table-hover align-middle dataTable">
                 <thead class="table-light text-center">
                     <tr>
                         <th>ID Pendaftar</th>
                         <th>Nama</th>
                         <th>Tanggal Lahir</th>
                         <th>Status</th>
-                        <th style="min-width: 140px;">Aksi</th>
+                        <th style="width: 20%;">Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach($pendaftar as $item)
                     <tr>
                         <td class="text-center">PD{{ str_pad($item->id, 3, '0', STR_PAD_LEFT) }}</td>
-                        <td>{{ $item->nama_lengkap }}</td>
-                        <td>{{ \Carbon\Carbon::parse($item->tanggal_lahir)->format('d-m-Y') }}</td>
+                        <td class="text-left">{{ $item->nama_lengkap }}</td>
+                        <td class="text-left">{{ \Carbon\Carbon::parse($item->tanggal_lahir)->format('d-m-Y') }}</td>
                         <td class="text-center">
                             <span class="badge 
                                 @if($item->status === 'pending') bg-warning
@@ -47,6 +47,12 @@
                                     <option value="ditolak" {{ $item->status === 'ditolak' ? 'selected' : '' }}>Ditolak</option>
                                 </select>
                                 <button type="submit" class="btn btn-sm btn-success">Update</button>
+                            </form>
+                            <form action="{{ route('admin.pendaftar.destroy', $item->id) }}" method="POST" 
+                                onsubmit="return confirm('Yakin ingin menghapus Pendaftar ini?')" class="d-inline">
+                                @csrf
+                                @method('DELETE')
+                                <button class="btn btn-sm btn-danger">Hapus</button>
                             </form>
                         </td>
                     </tr>

@@ -93,4 +93,36 @@ public function storeHeader(Request $request)
 
 }
 
+public function destroyKategori($id)
+{
+    $header = FormAsesmenHeader::findOrFail($id);
+    // Hapus semua pertanyaan terkait sebelum menghapus header
+    $header->formAsesmen()->delete();
+    $header->delete();
+
+    return redirect()->route('admin.ubah_asesmen.index')->with('success', 'Kategori asesmen beserta pertanyaannya berhasil dihapus.');
+
+}
+
+public function editKategori($id)
+{
+    $header = FormAsesmenHeader::findOrFail($id);
+    return view('admin.ubah_asesmen.edit_kategori', compact('header'));
+}
+
+public function updateKategori(Request $request, $id)
+{
+    $request->validate([
+        'title' => 'required|string|max:255',
+        'order' => 'required|integer',
+    ]);
+
+    $header = FormAsesmenHeader::findOrFail($id);
+    $header->update([
+        'title' => $request->title,
+        'order' => $request->order,
+    ]);
+
+    return redirect()->route('admin.ubah_asesmen.index')->with('success', 'Kategori asesmen berhasil diperbarui.');
+}
 }

@@ -19,7 +19,7 @@
                     <p class="text-center">Tidak ada jadwal asesmen untuk saat ini.</p>
                 @else
                     <div class="table-responsive">
-                        <table class="table table-bordered">
+                        <table class="table table-bordered dataTable">
                             <thead>
                                 <tr>
                                     <th>ID Pendaftar</th>

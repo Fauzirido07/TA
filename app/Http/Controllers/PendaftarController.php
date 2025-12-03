@@ -39,7 +39,6 @@ class PendaftarController extends Controller
     // Menyimpan data pendaftaran
     public function store(Request $request)
     {
-        dd($validatedata);
         $validatedData = $request->validate([
             'nama_lengkap' => 'required|string|max:255',
             'tanggal_lahir' => 'required|date',

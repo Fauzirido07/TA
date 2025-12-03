@@ -5,8 +5,26 @@
     <div class="card shadow-sm p-4" style="width: 100%; max-width: 400px;">
         <h3 class="text-center mb-4">Login Pengguna</h3>
 
-        @if(session('error'))
-            <div class="alert alert-danger">{{ session('error') }}</div>
+            @if(session('lock_seconds'))
+            <div id="cooldown-box" class="alert alert-warning text-center">
+                <div>Coba Lagi Pada...</div>
+                <div id="cooldown-timer" style="font-size: 22px; font-weight: bold;"></div>
+
+                <div class="progress mt-2" style="height: 6px;">
+                    <div id="cooldown-bar" class="progress-bar bg-danger" style="width: 100%;"></div>
+                </div>
+            </div>
+            @endif
+
+
+       @if($errors->any() && !session('lock_seconds'))
+        <div class="alert alert-danger">
+            <ul class="mb-0">
+                @foreach($errors->all() as $error)
+                <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
         @endif
 
         <form action="{{ route('login.post') }}" method="POST">
@@ -31,6 +49,42 @@
 
         <div class="text-center mt-3">
             <small>Belum punya akun? <a href="{{ route('register') }}">Daftar di sini</a></small>
+
+            <div class="text-center mt-2">
+                <!-- Link ke Forgot Password -->
+                <a href="{{ route('password.request') }}">Lupa Password?</a>
+            </div>
+            @if(session('lock_seconds'))
+            <script>
+                let s = {{ session('lock_seconds') }};
+                let total = s;
+
+                const btn = document.querySelector("button[type='submit']");
+                btn.disabled = true;
+                btn.classList.add("disabled");
+
+                function runCooldown() {
+                    if (s <= 0) {
+                        btn.disabled = false;
+                        btn.classList.remove("disabled");
+                        document.getElementById('cooldown-box').remove();
+                        return;
+                    }
+
+                    // Update timer text
+                    document.getElementById('cooldown-timer').innerHTML = s + " detik";
+
+                    // Update progress bar
+                    const percent = (s / total) * 100;
+                    document.getElementById('cooldown-bar').style.width = percent + "%";
+
+                    s--;
+                    setTimeout(runCooldown, 1000);
+                }
+
+                runCooldown();
+            </script>
+            @endif
         </div>
     </div>
 </div>

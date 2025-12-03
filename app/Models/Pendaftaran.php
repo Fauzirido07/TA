@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Pendaftaran extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     protected $table = 'pendaftaran';
 
@@ -65,7 +66,9 @@ class Pendaftaran extends Model
 
     public function jadwalAsesmen()
     {
-        return $this->hasOne(JadwalAsesmen::class);
+        return $this->hasOne(JadwalAsesmen::class, 'pendaftaran_id');
     }
+
+
 
 }

@@ -22,7 +22,7 @@ class ProsedurController extends Controller
     public function store(Request $request)
     {
         $prosedur = new ProsedurPendaftaran();
-        $prosedur->deskripsi = 'Panduan Pendaftaran';
+        $prosedur->deskripsi = 'User Guide untuk Prosedur Pendaftaran';
         if ($request->hasFile('file_panduan')) {
             $path = $request->file('file_panduan')->store('uploads/prosedur', 'public_html');
             $prosedur->file_path = $path;

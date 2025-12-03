@@ -11,10 +11,14 @@ class GuruAsesmenDinamisController extends Controller
 {
     // Menampilkan daftar siswa untuk dipilih guru
     public function pilihSiswa()
-    {
-        $pendaftar = Pendaftaran::all();
-        return view('guru.asesmen_dinamis_pilih', compact('pendaftar'));
-    }
+{
+    $pendaftar = \App\Models\Pendaftaran::whereHas('jadwalAsesmen')
+        ->with(['jadwalAsesmen', 'asesmen'])
+        ->get();
+
+    return view('guru.asesmen_dinamis_pilih', compact('pendaftar'));
+}
+
 
     // Menampilkan form asesmen dinamis berdasarkan data dari admin
     public function isiForm($id)

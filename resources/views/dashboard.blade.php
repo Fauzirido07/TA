@@ -23,14 +23,12 @@
             @elseif($pendaftaran->status=='diterima')
             <div class="alert alert-success">
                 <h5><i class="icon fas fa-info"></i> Informasi!</h5>
-                Selamat Anda Sudah Diterima diSLB-B Dharma Wanita Sidoarjo</b>
-                <br>Terima Kasih.
+                Selamat Anda Sudah Diterima diSLB-B Dharma Wanita Sidoarjo </b> 
             </div>
             @elseif($pendaftaran->status=='ditolak')
             <div class="alert alert-danger">
                 <h5><i class="icon fas fa-info"></i> Informasi!</h5>
                 Mohon Maaf Anda Belum Diterima Di Sekolah Kami. Tetap Semangat dan Jangan Menyerah Mencari Sekolah yang Tepat!
-                <br>Terima Kasih.
             </div>
             @endif
         @else
@@ -45,39 +43,56 @@
     <div class="col-md-12">
         <div class="card">
             <div class="card-body">
-                    @if($pendaftaran)
-                        @if(!$pendaftaran->daftarUlang)
+                @if($pendaftaran)
+                    @if($pendaftaran->status == 'diterima' || $pendaftaran->status == 'ditolak')
                         <div class="progress">
-                            <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="width: 25%">25%</div>
-                        </div>
-                        <br>
-                        <div class="text-center">Terdaftar</div>
-                        @elseif($pendaftaran->daftarUlang)
-                        <div class="progress">
-                            <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: 50%">50%</div>
-                        </div>
-                        <br>
-                        <div class="text-center">Proses Administrasi & Daftar Ulang</div>
-                        @elseif($pendaftaran->jadwalAsesmen)
-                        <div class="progress">
-                            <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 75%">75%</div>
-                        </div>
-                        <br>
-                        <div class="text-center">Proses Asesmen</div>
-                        @elseif($pendaftaran->status == 'diterima' or $pendaftaran->status == 'ditolak')
-                        <div class="progress">
-                            <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">100%</div>
+                            <div class="progress-bar progress-bar-striped progress-bar-animated"
+                                role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"
+                                style="width: 100%">100%</div>
                         </div>
                         <br>
                         <div class="text-center">Pengumuman</div>
-                        @endif
+                    @elseif($pendaftaran->jadwalAsesmen)
+                        <div class="progress">
+                            <div class="progress-bar progress-bar-striped progress-bar-animated"
+                                role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"
+                                style="width: 75%">75%</div>
+                        </div>
+                        <br>
+                        <div class="text-center">Proses Asesmen</div>
+                    @elseif($pendaftaran->daftarUlang)
+                        <div class="progress">
+                            <div class="progress-bar progress-bar-striped progress-bar-animated"
+                                role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"
+                                style="width: 50%">50%</div>
+                        </div>
+                        <br>
+                        <div class="text-center">Proses Administrasi & Daftar Ulang</div>
+                    @elseif(!$pendaftaran->daftarUlang)
+                        <div class="progress">
+                            <div class="progress-bar progress-bar-striped progress-bar-animated"
+                                role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"
+                                style="width: 25%">25%</div>
+                        </div>
+                        <br>
+                        <div class="text-center">Terdaftar</div>
+
                     @else
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" style="width: 0%">0%</div>
+                        </div>
+                        <br>
+                        <div class="text-center">Status Tidak Diketahui</div>
+                    @endif
+                @else
                     <div class="progress">
-                    <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%">0%</div>
+                        <div class="progress-bar progress-bar-striped progress-bar-animated"
+                            role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"
+                            style="width: 0%">0%</div>
                     </div>
                     <br>
-                    <div class="text-center">Belum Mendaftar</div> 
-                    @endif
+                    <div class="text-center">Belum Mendaftar</div>
+                @endif
             </div>
         </div>
     </div>

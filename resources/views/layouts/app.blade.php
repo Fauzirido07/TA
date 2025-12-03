@@ -16,7 +16,7 @@
 <body class="d-flex flex-column min-vh-100">
 
     {{-- Navbar --}}
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container">
             @auth
             <button
@@ -127,10 +127,12 @@
         @yield('content')
     </main>
 
-    {{-- Footer --}}
-    <footer class="text-center text-muted mt-4 mb-3">
-        <small>&copy; {{ date('Y') }} PPDB SLB-B Dharma Wanita Sidoarjo</small>
-    </footer>
+    <footer id="contact" class="bg-dark text-white py-4">
+    <div class="container text-center">
+      <p>&copy; 2025 SLB-B DHARMA WANITA SIDOARJO</p>
+      <p>Alamat: Jl. Pahlawan GG. Pahlawan, Sidokumpul, Kec. Sidoarjo Kabupaten Sidoarjo | Email: slbdwsda@onklas.id | Kontak: 085731271050</p>
+    </div>
+  </footer>
 
     {{-- Bootstrap JS --}}
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

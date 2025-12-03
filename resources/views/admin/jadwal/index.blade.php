@@ -25,7 +25,7 @@
                 <div class="row">
                     <div class="col-md-12">
                                 <div class="table-responsive shadow-sm">
-            <table class="table table-bordered table-hover align-middle">
+            <table class="table table-bordered table-hover align-middle dataTable">
                 <thead class="table-light text-center">
                     <tr>
                         <th style="width: 20%;">Nama</th>
@@ -36,7 +36,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @forelse($jadwal as $item)
+                    @foreach($jadwal as $item)
                         <tr>
                             <td>{{ $item->pendaftaran->nama_lengkap }}</td>
                             <td class="text-center">{{ $item->tanggal->format('d F Y') }}</td>
@@ -55,13 +55,7 @@
                                 </form>
                             </td>
                         </tr>
-                    @empty
-                        <tr>
-                            <td colspan="4" class="text-center text-muted fst-italic">
-                                Belum ada jadwal asesmen yang ditambahkan.
-                            </td>
-                        </tr>
-                    @endforelse
+                    @endforeach
                 </tbody>
             </table>
         </div>

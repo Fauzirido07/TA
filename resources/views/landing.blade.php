@@ -1,119 +1,239 @@
-@extends('layouts.app')
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>PPDB SLB-B DHARMA WANITA SIDOARJO</title>
+  <!-- Bootstrap 4 CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+    /* Custom CSS */
+    /* HERO RESPONSIVE */
+.hero {
+  background: url('{{asset("assets/images/Background-Landing-Page.webp")}}') no-repeat center center;
+  background-size: cover;
+  color: white;
+  min-height: 420px;
+  height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 20px;
+}
 
-@section('content')
-<div class="container py-5">
-    <div class="text-center mb-5">
-        <h1 class="display-4 fw-bold mb-3">Selamat Datang di PPDB SLB-B Dharma Wanita Sidoarjo</h1>
-        <p class="lead text-muted fs-5">
-            Sistem Pendaftaran Online untuk Calon Peserta Didik Berkebutuhan Khusus
-        </p>
-    </div>
+.hero h1 {
+  font-size: 2.5rem;
+  font-weight: bold;
+}
 
-    {{-- Tombol aksi utama --}}
-    <div class="d-flex justify-content-center gap-3 mb-5 flex-wrap">
-        @guest
-            <a href="{{ route('register') }}" class="btn btn-success btn-lg px-5 shadow-sm" style="min-width: 180px;">
-                <i class="bi bi-person-plus-fill me-2"></i> Daftar Sekarang
-            </a>
-            <a href="{{ route('login') }}" class="btn btn-outline-primary btn-lg px-5 shadow-sm" style="min-width: 180px;">
-                <i class="bi bi-box-arrow-in-right me-2"></i> Login
-            </a>
-        @endguest
+.hero p {
+  font-size: 1.2rem;
+}
 
+/* MOBILE ADJUSTMENT */
+@media (max-width: 768px) {
+  .hero h1 {
+    font-size: 1.8rem;
+  }
+  .hero p {
+    font-size: 1rem;
+  }
+}
+
+
+/* FEATURES ICON RESPONSIVE */
+#features img {
+  width: 100%;
+  max-width: 150px;
+  height: auto;
+}
+
+
+/* CAROUSEL RESPONSIVE */
+.carousel-inner img {
+  width: 100%;
+  max-height: 450px;
+  object-fit: contain;
+  padding: 10px;
+  border-radius: 12px;
+}
+
+@media (max-width: 768px) {
+  .carousel-inner img {
+    max-height: 260px;
+  }
+}
+
+/* CONTROLS RESPONSIVE */
+.carousel-control-prev,
+.carousel-control-next {
+  width: 10%;
+  filter: brightness(0);
+}
+
+@media (max-width: 768px) {
+  .carousel-control-prev,
+  .carousel-control-next {
+    width: 15%;
+    filter: brightness(0) invert(0);
+  }
+}
+
+/* BUTTON */
+.btn-clean {
+  background-color: #0d6efd;
+  color: white;
+  border-radius: 0.5rem;
+  padding: 0.65rem 1.5rem;
+  font-weight: 500;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.btn-clean:hover {
+  background-color: #0b5ed7;
+  transform: translateY(-2px);
+}
+
+
+
+  </style>
+
+  {{-- Favicon --}}
+    <link rel="icon" type="image/x-icon" href="{{ asset('assets/images/logo.ico') }}" />
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand d-flex align-items-center" href="{{ route('home') }}"> <img
+                    src="{{ asset('assets/images/logo.png') }}"
+                    alt="Logo"
+                    width="32"
+                    height="32"
+                    class="me-2"
+                />PPDB SLB-B
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ml-auto">
         @auth
-            @if(auth()->user()->role === 'pendaftar')
-                <a href="{{ route('dashboard.pendaftar') }}" class="btn btn-primary btn-lg px-5 shadow-sm" style="min-width: 220px;">
-                    <i class="bi bi-layout-text-sidebar-reverse me-2"></i> Dashboard Pendaftar
-                </a>
-            @elseif(auth()->user()->role === 'staff')
-                <a href="{{ route('admin.dashboard') }}" class="btn btn-primary btn-lg px-5 shadow-sm" style="min-width: 220px;">
-                    <i class="bi bi-gear-fill me-2"></i> Dashboard Admin
-                </a>
-            @elseif(auth()->user()->role === 'guru')
-                <a href="{{ route('guru.dashboard') }}" class="btn btn-primary btn-lg px-5 shadow-sm" style="min-width: 220px;">
-                    <i class="bi bi-journal-bookmark-fill me-2"></i> Dashboard Guru
-                </a>
-            @endif
-
-            <a href="{{ route('logout') }}"
-               onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
-               class="btn btn-danger btn-lg ms-3 px-5 shadow-sm" style="min-width: 120px;">
-               <i class="bi bi-box-arrow-right me-2"></i> Logout
-            </a>
-
-            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                @csrf
+        <li class="nav-item">
+          <a class="nav-link mx-2"
+            style="font-weight: 600; border-bottom: 2px solid transparent;"
+            onmouseover="this.style.borderBottom='2px solid #fff'"
+            onmouseout="this.style.borderBottom='2px solid transparent'"
+            href="
+                  @if(Auth::user()->role == 'staff')
+                      {{ route('admin.dashboard') }}
+                  @elseif(Auth::user()->role == 'guru')
+                      {{ route('guru.dashboard') }}
+                  @else
+                      {{ route('dashboard.pendaftar') }}
+                  @endif
+            ">
+              Dashboard
+          </a>
+      </li>
+              
+        <li class="nav-item">
+            <span class="nav-link">Halo, {{ Auth::user()->nama }}</span>
+        </li>
+        <li class="nav-item">
+            <form action="{{ route('logout') }}" method="POST" class="d-inline">
+            @csrf
+            <button class="btn btn-sm btn-light">Logout</button>
             </form>
+        </li>
+        @else
+        <li class="nav-item">
+            <a class="nav-link" href="{{ route('login') }}">Login</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{ route('register') }}">Daftar</a>
+        </li>
         @endauth
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div>
+      <h1>Selamat Datang di PPDB SLB-B Dharma Wanita Sidoarjo</h1>
+      <p class="lead">Sistem Pendaftaran Online untuk Calon Peserta Didik Berkebutuhan Khusus Kategori B</p>
+      <a href="{{ route('register') }}" class="btn btn-clean btn-lg mt-3">Daftar Sekarang</a>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section id="features" class="py-5 text-center">
+  <div class="container">
+    <h2 class="mb-5">Jenjang Pendidikan Kami</h2>
+    <div class="row">
+      <div class="col-md-4 mb-4">
+        <img src="{{asset('assets/images/icon-sd.png')}}" alt="SD" class="img-fluid" style="width:150px; height:250px;">
+        <h4>SD</h4>
+      </div>
+      <div class="col-md-4 mb-4">
+        <img src="{{asset('assets/images/icon-smp.png')}}" alt="SMP" class="img-fluid" style="width:150px; height:250px;">
+        <h4>SMP</h4>
+      </div>
+      <div class="col-md-4 mb-4">
+        <img src="{{asset('assets/images/icon-sma.png')}}" alt="SMA" class="img-fluid" style="width:150px; height:250px;">
+        <h4>SMA</h4>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+  <!-- Testimonial Section -->
+ <section id="testimonials" class="py-5 bg-light">
+  <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+    <div class="carousel-inner">
+
+      <div class="carousel-item active">
+        <img src="{{ asset('assets/images/brosur3.jpg') }}" class="d-block w-100" alt="Brosur 3">
+      </div>
+
+      <div class="carousel-item">
+        <img src="{{ asset('assets/images/brosur2.jpg') }}" class="d-block w-100" alt="Brosur 2">
+      </div>
+
+      <div class="carousel-item">
+        <img src="{{ asset('assets/images/brosur4.jpg') }}" class="d-block w-100" alt="Brosur 4">
+      </div>
+
     </div>
 
-    <hr>
+    <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="sr-only">Previous</span>
+    </a>
 
-    {{-- Tentang Sekolah --}}
-    <div class="row justify-content-center mt-5">
-        <div class="col-md-8 col-lg-7">
-            <div class="card shadow-sm p-4 bg-light rounded-4">
-                <h4 class="mb-3 fw-semibold text-primary">
-                    <i class="bi bi-building me-2"></i> Tentang Sekolah
-                </h4>
-                <p class="text-secondary fs-5">
-                    SLB-B Dharma Wanita Sidoarjo melayani pendidikan untuk anak berkebutuhan khusus dengan pendekatan yang 
-                    disesuaikan secara personal. Sistem ini memudahkan proses pendaftaran, asesmen, dan komunikasi secara digital, 
-                    sehingga meningkatkan kualitas pelayanan dan kenyamanan bagi siswa dan orang tua.
-                </p>
-            </div>
-        </div>
+    <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="sr-only">Next</span>
+    </a>
     </div>
+  </div>
+</section>
 
-    {{-- Prosedur Pendaftaran --}}
-    <div class="row justify-content-center mt-5">
-        <div class="col-md-8 col-lg-7">
-            <div class="card shadow-sm p-4 bg-light rounded-4">
-                <h4 class="mb-3 fw-semibold text-primary">
-                    <i class="bi bi-list-check me-2"></i> Prosedur Pendaftaran 
-                </h4>
 
-                <p class="text-secondary fs-5">
-                    Silakan ikuti langkah-langkah berikut untuk melakukan pendaftaran di SLB-B Dharma Wanita Sidoarjo:
-                </p>
 
-                <ol class="text-secondary fs-5">
-                    <li>Buat akun terlebih dahulu dengan menekan tombol <b>Daftar</b>, lalu mengisi nama, email Google, dan password.</li>
-                    <li>Setelah membuat akun, lanjutkan dengan melakukan <b>Login</b> menggunakan akun yang sudah dibuat.</li>
-                    <li>Setelah berhasil login, pengguna dapat mendaftar dengan memilih tombol <b>Formulir Pendaftaran</b> dan mengisi form.</li>
-                    <li>Jika formulir sudah lengkap, pengguna dapat mengirim form tersebut lalu melanjutkan ke proses administrasi langsung ke SLB-B Dharma Wanita Sidoarjo.</li>
-                    <li>Setelah administrasi selesai, pengguna dapat melakukan daftar ulang dengan menekan tombol <b>Daftar Ulang</b> dan mengupload dokumen yang diperlukan.</li>
-                    <li>Setelah asesmen, pengguna dapat melihat hasil asesmen melalui tombol <b>Lihat Hasil Asesmen</b> dan dapat mengunduhnya melalui tombol <b>Cetak Hasil Asesmen</b>.</li>
-                    <li>Pendaftaran selesai.</li>
-                </ol>
-
-                @if(!empty($prosedur) && !empty($prosedur->file_path))
-                    <a href="{{ asset($prosedur->file_path) }}" class="btn btn-primary mt-3" target="_blank">
-                        Lihat File Prosedur Lengkap
-                    </a>
-                @endif
-
-            </div>
-        </div>
+  <!-- Footer -->
+  <footer id="contact" class="bg-dark text-white py-4">
+    <div class="container text-center">
+      <p>&copy; 2025 SLB-B DHARMA WANITA SIDOARJO</p>
+      <p>Alamat: Jl. Pahlawan GG. Pahlawan, Sidokumpul, Kec. Sidoarjo Kabupaten Sidoarjo | Email: slbdwsda@onklas.id | Kontak: 085731271050</p>
     </div>
+  </footer>
 
-</div>
-
-@endsection
-
-@push('styles')
-<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet" />
-<style>
-    .container {
-        animation: fadeInUp 0.8s ease forwards;
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    @keyframes fadeInUp {
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-</style>
-@endpush
+  <!-- Bootstrap 4 JS -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

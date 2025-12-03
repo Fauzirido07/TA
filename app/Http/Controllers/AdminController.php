@@ -13,9 +13,9 @@ class AdminController extends Controller
     public function dashboard()
     {
         $pendaftarCounts = [
-            'sd' => pendaftaran::where('jenjang_sekolah_id', 2)->count(),
-            'smp' => pendaftaran::where('jenjang_sekolah_id', 3)->count(),
-            'sma' => pendaftaran::where('jenjang_sekolah_id', 4)->count(),
+            'sd' => pendaftaran::where('jenjang_sekolah_id', 1)->count(),
+            'smp' => pendaftaran::where('jenjang_sekolah_id', 2)->count(),
+            'sma' => pendaftaran::where('jenjang_sekolah_id', 3)->count(),
             'total' => pendaftaran::count(),
         ];
         $administrasiCounts = [
@@ -23,23 +23,35 @@ class AdminController extends Controller
             'belum' => pendaftaran::where('status', 'pending')->count(),
         ];
         $belumAsesmenCounts = [
-            'sd' => Pendaftaran::where('jenjang_sekolah_id', 2)
+            'sd' => Pendaftaran::where('jenjang_sekolah_id', 1)
                         ->whereDoesntHave('asesmen')
                         ->count(),
-            'smp' => Pendaftaran::where('jenjang_sekolah_id', 3)
+            'smp' => Pendaftaran::where('jenjang_sekolah_id', 2)
                         ->whereDoesntHave('asesmen')
                         ->count(),
-            'sma' => Pendaftaran::where('jenjang_sekolah_id', 4)
+            'sma' => Pendaftaran::where('jenjang_sekolah_id', 3)
                         ->whereDoesntHave('asesmen')
                         ->count(),
             'total' => Pendaftaran::count(),
         ];
         $daftarUlangCounts = [
-            'sd' => 10,
-            'smp' => 7,
-            'sma' => 5,
+            'sd' => Pendaftaran::where('jenjang_sekolah_id', 1)
+                        ->whereHas('daftarUlang')
+                        ->count(),
+            'smp' => Pendaftaran::where('jenjang_sekolah_id', 2)
+                        ->whereHas('daftarUlang')
+                        ->count(),
+            'sma' => Pendaftaran::where('jenjang_sekolah_id', 3)
+                        ->whereHas('daftarUlang')
+                        ->count(),
         ];
-        return view('admin.dashboard_new', compact('pendaftarCounts', 'administrasiCounts', 'daftarUlangCounts', 'belumAsesmenCounts'));
+        $statusCounts = [
+            'diterima' => Pendaftaran::where('status', 'diterima')->count(),
+            'ditolak' => Pendaftaran::where('status', 'ditolak')->count(),
+
+        ];
+
+        return view('admin.dashboard_new', compact('pendaftarCounts', 'administrasiCounts', 'daftarUlangCounts', 'belumAsesmenCounts', 'statusCounts'));
     }
 
     public function users()
@@ -51,7 +63,7 @@ class AdminController extends Controller
     public function addUser(Request $request)
     {
         $request->validate([
-            'nama' => 'required|string',
+            'nama' => 'required|string|max:255|regex:/^[a-zA-Z\s]+$/',
             'email' => 'required|email|unique:users',
             'password' => 'required|min:6'
         ]);
@@ -60,7 +72,7 @@ class AdminController extends Controller
             'nama' => $request->nama,
             'email' => $request->email,
             'password' => bcrypt($request->password),
-            'role' => 'guru'
+            'role' => $request->role ?? 'guru'
         ]);
 
         return redirect()->route('admin.users')->with('success', 'Guru berhasil ditambahkan.');
@@ -156,4 +168,15 @@ class AdminController extends Controller
         return view('admin.pendaftar', compact('pendaftar'));
     }
 
+    public function destroyPendaftar($id)
+    {
+        $pendaftar = Pendaftaran::findOrFail($id);
+        $pendaftar->orangTua()->delete();
+        $pendaftar->daftarUlang()->delete();
+        $pendaftar->asesmen()->delete();
+        $pendaftar->jadwalAsesmen()->delete();
+        $pendaftar->delete();
+
+        return redirect()->route('admin.pendaftar')->with('success', 'Pendaftar berhasil dihapus.');
+    }
 }

@@ -20,7 +20,7 @@
         </div>
     @else
         <a href="{{ asset($prosedur->file_path) }}" class="btn btn-primary" target="_blank">
-            Lihat Prosedur Pendaftaran
+            📄 Lihat {{$prosedur->deskripsi}}
         </a>
     @endif
     </div>

@@ -36,14 +36,14 @@
                     </div>
                     <div class="col-md-12">
                         <div class="form-group mt-3">
-                            <label>Nomor Induk Asal</label>
-                            <input type="number" class="form-control" name="nomor_induk_asal" placeholder="Masukkan Nomor Induk Asal" required>
+                            <label>Nomor Induk Asal <small class="text-muted">(Opsional - jika tidak ada, isi "Tidak ada")</small></label>
+                            <input type="text" class="form-control" name="nomor_induk_asal" placeholder='Contoh: 12345 atau "Tidak ada"'>
                         </div>
                     </div>
                     <div class="col-md-12">
                         <div class="form-group mt-3">
-                            <label>NISN</label>
-                            <input type="number" class="form-control" name="nisn" placeholder="Masukkan NISN" required>
+                            <label>NISN <small class="text-muted">(Opsional - jika tidak ada, isi "Tidak ada")</small></label>
+                            <input type="text" class="form-control" name="nisn" placeholder='Contoh: 0068xxxxx atau "Tidak ada"'>
                         </div>
                     </div>
                     <div class="col-md-12">
@@ -83,8 +83,8 @@
                     </div>
                     <div class="col-md-12">
                         <div class="form-group mt-3">
-                            <label>No Telepon Siswa</label>
-                            <input type="number" class="form-control" name="telepon_siswa" placeholder="Masukkan no telepon siswa" required>
+                            <label>No Telepon Siswa <small class="text-muted">(Opsional - jika tidak ada, isi "Tidak ada")</small></label>
+                            <input type="text" class="form-control" name="telepon_siswa" placeholder='Contoh: 0812xxxx atau "Tidak ada"'>
                         </div>
                     </div>
                     <div class="col-md-12">
@@ -94,38 +94,38 @@
                     </div>
                     <div class="col-md-12">
                         <div class="form-group mt-3">
-                            <label>Tamatan Dari</label>
-                            <input type="text" class="form-control" name="tamatan_dari" placeholder="Masukkan Tempat Terakhir Menempuh Pendidikan" required>
+                           <label>Tamatan Dari <small class="text-muted">(Opsional - jika tidak ada, isi "Tidak ada")</small></label>
+                           <input type="text" class="form-control" name="tamatan_dari" placeholder='Contoh: SD X atau "Tidak ada"'>
                         </div>
                     </div>
                     <div class="col-md-12">
                         <div class="form-group mt-3">
-                            <label>Tanggal STTB</label>
-                            <input type="date" class="form-control" name="tgl_sttb" placeholder="Masukkan Tanggal STTB" required>
+                            <label>Tanggal STTB <small class="text-muted">(Opsional - jika tidak ada, pilih "Today")</small></label>
+                            <input type="text" class="form-control" name="tgl_sttb" placeholder='Isi tanggal atau "Today"' onfocus="this.type='date'" onblur="this.type='text'">
                         </div>
                     </div>
                     <div class="col-md-12">
                         <div class="form-group mt-3">
-                            <label>No STTB</label>
-                            <input type="text" class="form-control" name="no_sttb" placeholder="Masukkan No STTB" required>
+                            <label>No STTB <small class="text-muted">(Opsional - jika tidak ada, isi "Tidak ada")</small></label>
+                            <input type="text" class="form-control" name="no_sttb" placeholder='Contoh: 123/XX/2023 atau "Tidak ada"'>
                         </div>
                     </div>
                     <div class="col-md-12">
                         <div class="form-group mt-3">
-                            <label>Lama Belajar</label>
-                            <input type="text" class="form-control" name="lama_belajar" placeholder="Masukkan Rentang Belajarnya" required>
+                            <label>Lama Belajar <small class="text-muted">(Opsional - jika tidak ada, isi "Tidak ada")</small></label>
+                            <input type="text" class="form-control" name="lama_belajar" placeholder='Contoh: 2 tahun atau "Tidak ada"'>
                         </div>
                     </div>
                     <div class="col-md-12">
                         <div class="form-group mt-3">
-                            <label>Pindahan Dari</label>
-                            <input type="text" class="form-control" name="pindahan_dari" placeholder="Masukkan Asal Sekolah" required>
+                            <label>Pindahan Dari <small class="text-muted">(Opsional - jika tidak ada, isi "Tidak ada")</small></label>
+                            <input type="text" class="form-control" name="pindahan_dari" placeholder='Contoh: SD X atau "Tidak ada"'>
                         </div>
                     </div>
                     <div class="col-md-12">
                         <div class="form-group mt-3">
-                            <label>Alasan</label>
-                            <input type="text" class="form-control" name="alasan" placeholder="Masukkan Alasan Kepindahannya    " required>
+                            <label>Alasan <small class="text-muted">(Opsional - jika tidak ada, isi "Tidak ada")</small></label>
+                            <input type="text" class="form-control" name="alasan" placeholder='Contoh: pindah rumah atau "Tidak ada"'>
                         </div>
                     </div>
                     <div class="col-md-12">

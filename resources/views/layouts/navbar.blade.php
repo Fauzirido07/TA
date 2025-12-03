@@ -8,7 +8,7 @@
               <a class="nav-link" data-lte-toggle="sidebar" href="#" role="button">
                 <i class="bi bi-list"></i>
               </a>
-              @if(auth()->user()->role === 'pendaftar')
+              @if(auth()->user())
             </li>
             <li class="nav-item d-none d-md-block"><a href="{{ route('prosedur') }}" class="nav-link">Prosedur Pendaftaran</a></li>
             @endif
@@ -20,7 +20,9 @@
             <li class="nav-item dropdown user-menu">
               <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
                 <img
-                  src="{{ asset('assets/images/profile.jpg') }}"
+                  src="{{ auth()->user()->foto
+                        ? asset('uploads/foto/' . auth()->user()->foto)
+                        : asset('assets/images/profile.jpg') }}"
                   class="user-image rounded-circle shadow"
                   alt="User Image"
                 />
@@ -30,8 +32,10 @@
                 <!--begin::User Image-->
                 <li class="user-header text-bg-primary">
                   <img
-                    src="{{ asset('assets/images/profile.jpg') }}"
-                    class="rounded-circle shadow"
+                    src="{{ auth()->user()->foto
+                          ? asset('uploads/foto/' . auth()->user()->foto)
+                          : asset('assets/images/profile.jpg') }}"
+                    class="user-image rounded-circle shadow"
                     alt="User Image"
                   />
                   <p>
@@ -43,6 +47,7 @@
                 <li class="user-footer">
                   @auth
                   <!-- <a href="#" class="btn btn-default btn-flat float-end">Log out</a> -->
+                   <a href="{{ route('profile.edit') }}" class="btn btn-default btn-flat">Edit Profil</a>
                   <form action="{{ route('logout') }}" method="POST" class="d-inline">
                             @csrf
                             <button class="btn btn-default btn-flat float-end">Logout</button>

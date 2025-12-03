@@ -52,7 +52,7 @@ class HasilController extends Controller
 
 
 
-        return view('hasil', compact('asesmen', 'totalSkor', 'maxSkor', 'persen', 'hasilAsesmen'));
+        return view('hasil', compact('pendaftaran','asesmen', 'totalSkor', 'maxSkor', 'persen', 'hasilAsesmen'));
     }
 
     public function exportPdf()
@@ -61,7 +61,7 @@ class HasilController extends Controller
         $pendaftaran = Pendaftaran::where('user_id', $user->id)->first();
         $asesmen = Asesmen::where('pendaftaran_id', $pendaftaran->id)->first();
 
-        $maxPerGejala = 5;
+        $maxPerGejala = 3;
     $totalSkor = $asesmen->skor ?? 0;
     $totalGejala = 0;
 

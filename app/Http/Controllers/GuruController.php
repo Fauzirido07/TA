@@ -27,7 +27,6 @@ class GuruController extends Controller
     public function isiAsesmen($id)
     {
         $formAsesmenHeader = FormAsesmenHeader::all();
-        // dd($formAsesmenHeader->first()->formAsesmen);
 
         $pendaftaran = Pendaftaran::findOrFail($id);
         return view('guru.isi_asesmen', compact('pendaftaran'));
@@ -36,6 +35,39 @@ class GuruController extends Controller
     public function daftarAsesmen()
     {
     $asesmen = \App\Models\Asesmen::where('guru_id', auth()->id())->with('pendaftaran')->get();
+    $asesmen = $asesmen->map(function ($itemAsesmen) {
+        $maxPerGejala = 3;
+        $totalSkor = $itemAsesmen->skor ?? 0;
+        $totalGejala = 0;
+
+        $hasilAsesmen = \App\Models\HasilAsesmen::where('asesmen_id', $itemAsesmen->id)
+            ->with('formAsesmen')
+            ->get();
+
+        foreach ($hasilAsesmen as $item) {
+            if ($item->formAsesmen->question_type == 1) {
+                $totalGejala++;
+            }
+        }
+
+        $maxSkor = $totalGejala * $maxPerGejala;
+        $persen = $maxSkor > 0 ? round(($totalSkor / $maxSkor) * 100) : 0;
+        
+        if ($persen <= 50) {
+            $rekomendasi = 'Turun 2 tingkat.';
+        } elseif ($persen <= 65) {
+            $rekomendasi = 'Turun 1 tingkat.';
+        } elseif ($persen <= 80) {
+            $rekomendasi = 'Tetap di tingkat saat ini.';
+        } else {
+            $rekomendasi = 'Tetap di tingkat saat ini.';   
+        }
+
+        $itemAsesmen->rekomendasi = $rekomendasi;
+        $itemAsesmen->persen = $persen;
+        return $itemAsesmen;
+    });
+
     return view('guru.daftar_asesmen', compact('asesmen'));
     }
 

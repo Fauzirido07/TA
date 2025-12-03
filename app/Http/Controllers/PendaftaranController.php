@@ -25,8 +25,23 @@ class PendaftaranController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'nama_lengkap' => 'required|string|max:255',
+            'nama_lengkap' => 'required|string|max:255|regex:/^[a-zA-Z\s]+$/',
+            'nomor_induk_asal' => 'required|string|max:10',
+            'nisn' => 'required|string|max:10',
+            'nik' => 'required|string|max:16',
+            'tempat_lahir' => 'required|string|max:255|regex:/^[a-zA-Z\s]+$/',
+            'tanggal_lahir' => 'required|date',
+            'jenis_kelamin' => 'required|in:L,P',
+            'alamat' => 'required|string',
+            'telepon_siswa' => 'required|string|max:20',
+            'tamatan_dari' => 'required|string|max:255',
+            'tgl_sttb' => 'required|date',
+            'no_sttb' => 'required|string|max:100',
+            'lama_belajar' => 'required|string|max:50',
+            'pindahan_dari' => 'nullable|string|max:255',
+            'alasan' => 'nullable|string',
             'jenjang_sekolah_id' => 'required|exists:jenjang_sekolah,id',
+            'foto' => 'nullable|image|mimes:jpeg,png,jpg|max:10240',
         ]);
 
         $validated['user_id'] = auth()->id();

@@ -3,6 +3,8 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js" integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+" crossorigin="anonymous"></script>
 <script src="{{ asset('assets/js/adminlte.js') }}"></script>
  
+<script src="https://cdn.datatables.net/v/dt/dt-2.3.5/datatables.min.js" integrity="sha384-qH0inyYSCOpaLgM/WSarLVnq0ULwworkGFzUI+E6bpx0DUCIsJePT0TRDnLnkcU1" crossorigin="anonymous"></script>
+
 <script>
           $(document).ready(function() {
             @if(session('success'))
@@ -11,6 +13,8 @@
             @if(session('error'))
             $('#errorToast').toast('show')
             @endif
+
+            $('.dataTable').DataTable();
           });
           
 </script>
